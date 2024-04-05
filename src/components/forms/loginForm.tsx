@@ -26,7 +26,6 @@ export default function LoginForm() {
                 },
                 body: JSON.stringify(values),
             }).then((res) => res.json());
-            console.log(data);
             router.push("/")
         },
         validationSchema: LoginSchema

@@ -16,7 +16,6 @@ export default function Home() {
       method: 'GET'
     });
     const data = await res.json();
-    console.log(data)
     setChatHistory(data)
   }
   useEffect(() => {

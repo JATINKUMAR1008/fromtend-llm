@@ -37,7 +37,6 @@ export default function ChatPage({ params }: IPageProps) {
             method: 'GET'
         });
         const data = await res.json();
-        console.log(data)
         setChatHistory(data)
     }
     useEffect(() => {
@@ -94,7 +93,6 @@ function Chat({ params, refetch }: IPageProps) {
                 //@ts-ignore
                 const updatedMessages = [...messages];
                 const lastIndex = updatedMessages.length - 1;
-                console.log("lastindex", updatedMessages[lastIndex])
                 //@ts-ignore
                 updatedMessages[lastIndex] = {
                     sent_from: 'ai',
@@ -124,10 +122,8 @@ function Chat({ params, refetch }: IPageProps) {
         fetchChat(chatId).then((data) => {
             setMessages(data)
         })
-        console.log(messages)
     }, [truthy])
     useEffect(() => {
-        console.log(messages)
         if (containerRef.current) {
             (containerRef.current as HTMLDivElement).scrollTop = (containerRef.current as HTMLDivElement).scrollHeight;
         }

@@ -19,11 +19,8 @@ interface IMessage {
 }
 export default function Chat() {
     const [input, setInput] = useState("")
-    const [loading ,setLoading] = useState(false)
     const router = useRouter()
-    //@ts-ignore
     const [messages, setMessages] = useState<IMessage[]>([])
-    const [truthy, setTruthy] = useState(false)
 
     const containerRef = useRef(null)
     const handleSubmit = async (e: any) => {
@@ -73,13 +70,11 @@ export default function Chat() {
                 chunk = await reader.read();
             }
         }
-        setTruthy(!truthy)
         setInput("")
 
         router.replace(`/chat/${chatId}`)
     };
     useEffect(() => {
-        console.log(messages)
         if (containerRef.current) {
             (containerRef.current as HTMLDivElement).scrollTop = (containerRef.current as HTMLDivElement).scrollHeight;
         }
