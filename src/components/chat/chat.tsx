@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 import { FaArrowUpLong } from "react-icons/fa6";
 import { ChatBox } from "./chatBox";
 import { useRouter } from "next/navigation";
-import "./Components.css"
+import "@/app/components.css"
 import { updateChatLabel } from "@/utils/chats";
 import { RiLoader2Line } from "react-icons/ri";
 interface Message {

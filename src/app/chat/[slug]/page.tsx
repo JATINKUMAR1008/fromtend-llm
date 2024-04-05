@@ -4,7 +4,7 @@ import { fetchChat } from "@/utils/auth"
 import { FC, ReactNode, useEffect, useRef, useState } from "react"
 import { FaArrowUpLong } from "react-icons/fa6"
 import { ChatBox } from "@/components/chat/chatBox"
-import "@/components/chat/components.css"
+import "@/app/components.css"
 import { RiLoader2Line } from "react-icons/ri";
 import Sidebar from "@/components/sidebar/sidebar"
 import Header from "@/components/header/header"
