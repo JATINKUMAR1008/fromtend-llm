@@ -3,13 +3,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: start;
-    margin: 5px;
     gap: 10px;
 }
 .markdown_comp table thead{
     font-size: 15px;
     padding: 20px;
-    border:1px solid black;
+    border:1px solid white;
 }
 .markdown_comp table thead tr th{
     border:1px solid black;
@@ -24,7 +23,7 @@
 .markdown_comp table tr td{
     border-color: red;
     padding: 10px;
-    border:1px solid black;
+    border:1px solid white;
 }
 .markdown_comp p{
     font-size: 15px;

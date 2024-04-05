@@ -14,9 +14,9 @@ export const loginUser = async (body: ILoginBody) => {
     return data;
   };
 
-export const fetchChat = async() => {
+export const fetchChat = async(chatId:string) => {
   console.log("fetching chat")
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API}/getChat/660eb0fd0d391d387a7040ce`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API}/getChat/${chatId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

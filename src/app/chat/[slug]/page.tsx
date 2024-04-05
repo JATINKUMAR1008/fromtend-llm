@@ -1,12 +1,19 @@
 "use client"
-import { useRef, useEffect, useState } from "react";
-import { Button } from "../ui/button";
-import { FaArrowUpLong } from "react-icons/fa6";
-import { ChatBox } from "./chatBox";
-import { useRouter } from "next/navigation";
-import "./Components.css"
-import { updateChatLabel } from "@/utils/chats";
+import { Button } from "@/components/ui/button"
+import { fetchChat } from "@/utils/auth"
+import { FC, ReactNode, useEffect, useRef, useState } from "react"
+import { FaArrowUpLong } from "react-icons/fa6"
+import { ChatBox } from "@/components/chat/chatBox"
+import "@/components/chat/components.css"
 import { RiLoader2Line } from "react-icons/ri";
+import Sidebar from "@/components/sidebar/sidebar"
+import Header from "@/components/header/header"
+interface IPageProps {
+    params: {
+        slug: string
+    }
+    refetch: () => void
+}
 interface Message {
     message: IMessage,
     last_user_message: string,
@@ -17,27 +24,49 @@ interface IMessage {
     sent_from: string
     content: string
 }
-export default function Chat() {
-    const [input, setInput] = useState("")
-    const [loading ,setLoading] = useState(false)
-    const router = useRouter()
-    //@ts-ignore
-    const [messages, setMessages] = useState<IMessage[]>([])
-    const [truthy, setTruthy] = useState(false)
+interface IChat {
+    chat_id: string
+    label: string
+}
+export default function ChatPage({ params }: IPageProps) {
+    const [chatHistory, setChatHistory] = useState<IChat[]>([])
 
+    const [open, setOpen] = useState(false)
+    const fetchHistory = async () => {
+        const res = await fetch('/api/chat', {
+            method: 'GET'
+        });
+        const data = await res.json();
+        console.log(data)
+        setChatHistory(data)
+    }
+    useEffect(() => {
+        fetchHistory()
+    }, [])
+    const refetchHistory = async () => {
+        fetchHistory()
+    }
+    return (
+        <main className="flex min-h-screen w-full items-center justify-between ">
+            <div className="max-w-[15%] h-full lg:w-full w-0">
+                <Sidebar chatId={params.slug} chatHistory={chatHistory} open={open} setOpen={setOpen} />
+            </div>
+            <div className="lg:max-w-[85%] h-full max-w-[100%] w-full">
+                <Header setOpen={setOpen} />
+                <Chat params={params} refetch={refetchHistory} />
+            </div>
+        </main>
+    )
+}
+function Chat({ params, refetch }: IPageProps) {
+    const chatId = params.slug
+    const [input, setInput] = useState("")
+    const [messages, setMessages] = useState<IMessage[]>([])
+    const [loading, setLoading] = useState(false)
+    const [truthy, setTruthy] = useState(false)
     const containerRef = useRef(null)
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        const createNewChatPayload = await fetch('/api/chat/new', {
-            method: 'GET'
-        }).then(res => res.json()).then(data => {
-            console.log(data)
-            updateChatLabel(data.chat_id, input)
-            return data
-        });
-
-        const chatId = createNewChatPayload.chat_id;
-
         //@ts-ignore
         setMessages([...messages, {
             sent_from: 'user',
@@ -63,6 +92,15 @@ export default function Chat() {
             while (!chunk.done) {
                 result += decoder.decode(chunk.value, { stream: true });
                 //@ts-ignore
+                const updatedMessages = [...messages];
+                const lastIndex = updatedMessages.length - 1;
+                console.log("lastindex", updatedMessages[lastIndex])
+                //@ts-ignore
+                updatedMessages[lastIndex] = {
+                    sent_from: 'ai',
+                    content: result
+                };
+                //@ts-ignore
                 setMessages([...messages, {
                     sent_from: 'user',
                     content: input
@@ -75,26 +113,36 @@ export default function Chat() {
         }
         setTruthy(!truthy)
         setInput("")
-
-        router.replace(`/chat/${chatId}`)
     };
+    // useEffect(() => {
+    //     fetchChat(chatId).then((data) => {
+    //         setMessages(data)
+    //     })
+    //     console.log(messages)
+    // }, [])
+    useEffect(() => {
+        fetchChat(chatId).then((data) => {
+            setMessages(data)
+        })
+        console.log(messages)
+    }, [truthy])
     useEffect(() => {
         console.log(messages)
         if (containerRef.current) {
             (containerRef.current as HTMLDivElement).scrollTop = (containerRef.current as HTMLDivElement).scrollHeight;
         }
+        refetch()
     }, [messages])
 
     return (
         <div className="w-full h-screen relative flex justify-center">
-            <div className=" max-h-[83%] mt-10 min-w-[100%]  py-3 flex flex-col gap-1 overflow-y-auto" ref={containerRef}>
+            <div className=" max-h-[83%] mt-10  py-3 flex flex-col gap-1 overflow-y-auto" ref={containerRef}>
                 {messages.length > 0 ? messages?.map((message, index) => (
                     //@ts-ignore
                     <ChatBox key={index} message={message} />
                 )) : (
-                    <div className="w-full h-full flex flex-col items-center justify-center text-center">
-                        <h1 className="text-4xl text-muted font-sans font-semibold">GAIA</h1>
-                        <p className="mt-2 text-2xl">Ask your questions from me 😊.</p>
+                    <div className="w-full h-full items-center justify-center flex">
+                        <RiLoader2Line size={50} className="animate-spin text-neutral-300" />
                     </div>
                 )}
             </div>
@@ -109,4 +157,3 @@ export default function Chat() {
         </div>
     )
 }
-
