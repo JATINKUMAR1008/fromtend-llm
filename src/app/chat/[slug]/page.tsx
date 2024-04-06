@@ -12,6 +12,11 @@ interface IPageProps {
     params: {
         slug: string
     }
+}
+interface IChatComponents {
+    params: {
+        slug: string
+    }
     refetch: () => void
 }
 interface Message {
@@ -57,7 +62,7 @@ export default function ChatPage({ params }: IPageProps) {
         </main>
     )
 }
-function Chat({ params, refetch }: IPageProps) {
+function Chat({ params, refetch }: IChatComponents) {
     const chatId = params.slug
     const [input, setInput] = useState("")
     const [messages, setMessages] = useState<IMessage[]>([])
