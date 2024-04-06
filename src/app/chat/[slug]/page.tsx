@@ -1,6 +1,6 @@
 "use client"
 import { Button } from "@/components/ui/button"
-import { fetchChat } from "@/utils/auth"
+// import { fetchChat } from "@/utils/auth"
 import { FC, ReactNode, useEffect, useRef, useState } from "react"
 import { FaArrowUpLong } from "react-icons/fa6"
 import { ChatBox } from "@/components/chat/chatBox"
@@ -123,17 +123,24 @@ function Chat({ params, refetch }: IChatComponents) {
     //     })
     //     console.log(messages)
     // }, [])
+
+    const fetchChat = async (chatId: string) => {
+        const res = await fetch('/api/chat/fetch', {
+            method: 'GET'
+        }).then(res => res.json()).then(data => { return data });
+        return res;
+    }
     useEffect(() => {
         fetchChat(chatId).then((data) => {
-            setMessages(data)
-        })
-    }, [truthy])
+            setMessages(data);
+        });
+    }, [truthy]);
     useEffect(() => {
         if (containerRef.current) {
             (containerRef.current as HTMLDivElement).scrollTop = (containerRef.current as HTMLDivElement).scrollHeight;
         }
-        refetch()
-    }, [messages])
+        refetch();
+    }, [messages]);
 
     return (
         <div className="w-full h-screen relative flex justify-center">

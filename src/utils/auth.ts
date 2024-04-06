@@ -14,12 +14,13 @@ export const loginUser = async (body: ILoginBody) => {
     return data;
   };
 
-export const fetchChat = async(chatId:string) => {
+export const fetchChat = async(chatId:string ,token:string) => {
   console.log("fetching chat")
     const res = await fetch(`${process.env.NEXT_PUBLIC_API}/getChat/${chatId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         }
       });
       const data = await res.json();
