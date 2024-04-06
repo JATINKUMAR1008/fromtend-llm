@@ -80,9 +80,9 @@ function Chat({ params, refetch }: IChatComponents) {
             content: 'thinking...'
         }] as IMessage[]);
 
-        const res = await fetch(`/api/stream`, {
+        const res = await fetch(`$${process.env.NEXT_PUBLIC_API}/ai_response/${chatId}`, {
             method: 'POST',
-            body: JSON.stringify({ input, chatId }),
+            body: JSON.stringify({ input_str: input }),
             headers: {
                 'Content-Type': 'application/json'
             }
