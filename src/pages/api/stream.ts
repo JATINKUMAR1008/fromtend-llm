@@ -5,6 +5,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     let temp =true
     const body = await req.body
     console.log(body)
+        
+    res.write("stream start")
     const response = await fetch(`${process.env.NEXT_PUBLIC_API}/ai_response/${body.chatId}`, {
         method: 'POST',
         body: JSON.stringify({ input_str: body.input }),
@@ -14,6 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
     const reader = response.body ? response.body.getReader() : null;
     const decoder = new TextDecoder();
+        
     if (reader) {
             temp = false
             let chunk = await reader.read();
@@ -26,8 +29,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             res.end()
         }
     else{
-        return res.status(500).json({error: "error"})
+        res.end()
     }
+  
   } else {
     // Handle any other HTTP method
     res.status(405).json({error: "Method not allowed"})
