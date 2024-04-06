@@ -44,7 +44,7 @@ export default function Sidebar({ chatId, chatHistory, open, setOpen }: Iprops) 
                     <Button variant="outline" className="w-full sticky  bg-transparent" onClick={() => router.push("/")}>
                         Create New Chat
                     </Button>
-                    {chatHistory && <div className="mt-5 flex flex-col items-center text-muted overflow-y-auto gap-1">
+                    {chatHistory ? <div className="mt-5 flex flex-col items-center text-muted overflow-y-auto gap-1">
                         <h1 className="w-full text-left text-xs text-muted mb-5">History</h1>
                         {
                             chatHistory.length > 0 ? chatHistory.map((item, index) => (
@@ -58,7 +58,12 @@ export default function Sidebar({ chatId, chatHistory, open, setOpen }: Iprops) 
 
                             )
                         }
-                    </div>}
+                    </div> : (
+                        <div className="w-full h-full flex items-center justify-center">
+                            <RiLoader2Line size={20} className="animate-spin text-neutral-300" />
+                        </div>
+
+                    )}
                 </div>
                 <Button variant="outline" className="text-muted-foreground size-10 p-0" onClick={() => setOpen(false)}>
                     <MdKeyboardArrowLeft size={30} />

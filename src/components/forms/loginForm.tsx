@@ -3,8 +3,10 @@ import { useFormik } from "formik"
 import { Label } from "../ui/label"
 import { Input } from "../ui/input"
 import { Button } from "../ui/button"
+import { RiLoader2Line } from "react-icons/ri";
 import * as Yup from 'yup'
 import { useRouter } from "next/navigation"
+import { useState } from "react"
 const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Invalid Email').required('Required'),
     password: Yup.string().required('Required')
@@ -12,6 +14,7 @@ const LoginSchema = Yup.object().shape({
 
 export default function LoginForm() {
     const router = useRouter()
+    const [loading, setLoading] = useState(false)
     const { handleSubmit, handleChange, values, errors, touched } = useFormik({
         initialValues: {
             email: "",
@@ -19,6 +22,7 @@ export default function LoginForm() {
         },
         onSubmit: async (values) => {
             // console.log(values);
+            setLoading(true)
             const data = await fetch("/api/auth", {
                 method: "POST",
                 headers: {
@@ -26,6 +30,7 @@ export default function LoginForm() {
                 },
                 body: JSON.stringify(values),
             }).then((res) => res.json());
+            setLoading(false)
             router.push("/")
         },
         validationSchema: LoginSchema
@@ -48,7 +53,7 @@ export default function LoginForm() {
             </div>
 
             <Button variant="secondary" className="py-6">
-                Submit
+                {loading ? <RiLoader2Line className="animate-spin" /> : "Login"}
             </Button>
         </form>
     )
