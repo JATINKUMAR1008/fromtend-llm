@@ -103,6 +103,7 @@ function Chat({ params, refetch }: IChatComponents) {
 
             while (!chunk.done) {
                 result += decoder.decode(chunk.value, { stream: true });
+                // console.log(result)
                 //@ts-ignore
                 setMessages([...messages, {
                     sent_from: 'user',
