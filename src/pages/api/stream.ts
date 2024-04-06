@@ -15,7 +15,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const decoder = new TextDecoder();
     if (reader) {
             let chunk = await reader.read();
-            let result = '';
             while (!chunk.done) {
                 let resChunk = decoder.decode(chunk.value, { stream: true });
                 //@ts-ignore
