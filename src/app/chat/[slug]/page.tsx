@@ -80,20 +80,20 @@ function Chat({ params, refetch }: IChatComponents) {
             content: 'thinking...'
         }] as IMessage[]);
 
-        // const res = await fetch(`${process.env.NEXT_PUBLIC_API}/ai_response/${chatId}`, {
-        //     method: 'POST',
-        //     body: JSON.stringify({ input_str: input }),
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     }
-        // });
-        const res = await fetch(`/api/stream`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API}/ai_response/${chatId}`, {
             method: 'POST',
-            body: JSON.stringify({ input, chatId }),
+            body: JSON.stringify({ input_str: input }),
             headers: {
                 'Content-Type': 'application/json'
             }
         });
+        // const res = await fetch(`/api/stream`, {
+        //     method: 'POST',
+        //     body: JSON.stringify({ input, chatId }),
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     }
+        // });
         const reader = res.body ? res.body.getReader() : null;
         const decoder = new TextDecoder();
         if (reader) {
