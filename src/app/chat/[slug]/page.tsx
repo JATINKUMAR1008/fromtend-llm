@@ -125,7 +125,7 @@ function Chat({ params, refetch }: IChatComponents) {
     // }, [])
 
     const fetchChat = async (chatId: string) => {
-        const res = await fetch('/api/chat/fetch', {
+        const res = await fetch(`/api/chat/fetch?chatId=${chatId}`, {
             method: 'GET'
         }).then(res => res.json()).then(data => { return data });
         return res;
