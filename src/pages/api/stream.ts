@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
  
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
+    let temp =true
     const body = await req.body
     console.log(body)
     const response = await fetch(`${process.env.NEXT_PUBLIC_API}/ai_response/${body.chatId}`, {
@@ -11,10 +12,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             'Content-Type': 'application/json'
         }
     });
-    res.write("stream start")
     const reader = response.body ? response.body.getReader() : null;
     const decoder = new TextDecoder();
     if (reader) {
+            temp = false
             let chunk = await reader.read();
             while (!chunk.done) {
                 let resChunk = decoder.decode(chunk.value, { stream: true });
