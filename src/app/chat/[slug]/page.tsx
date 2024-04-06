@@ -109,7 +109,7 @@ function Chat({ params, refetch }: IChatComponents) {
                     content: input
                 }, {
                     sent_from: 'ai',
-                    content: result
+                    content: result.replace("stream start", "")
                 }] as IMessage[]);
 
                 chunk = await reader.read();

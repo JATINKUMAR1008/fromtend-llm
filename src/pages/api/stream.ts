@@ -11,6 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             'Content-Type': 'application/json'
         }
     });
+    res.write("stream start")
     const reader = response.body ? response.body.getReader() : null;
     const decoder = new TextDecoder();
     if (reader) {
