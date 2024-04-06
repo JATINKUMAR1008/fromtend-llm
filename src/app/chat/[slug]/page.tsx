@@ -79,9 +79,10 @@ function Chat({ params, refetch }: IChatComponents) {
             sent_from: 'ai',
             content: 'thinking...'
         }] as IMessage[]);
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API}/ai_response/${chatId}`, {
+
+        const res = await fetch(`/api/stream`, {
             method: 'POST',
-            body: JSON.stringify({ input_str: input }),
+            body: JSON.stringify({ input, chatId }),
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -96,14 +97,6 @@ function Chat({ params, refetch }: IChatComponents) {
             while (!chunk.done) {
                 result += decoder.decode(chunk.value, { stream: true });
                 //@ts-ignore
-                const updatedMessages = [...messages];
-                const lastIndex = updatedMessages.length - 1;
-                //@ts-ignore
-                updatedMessages[lastIndex] = {
-                    sent_from: 'ai',
-                    content: result
-                };
-                //@ts-ignore
                 setMessages([...messages, {
                     sent_from: 'user',
                     content: input
@@ -111,6 +104,7 @@ function Chat({ params, refetch }: IChatComponents) {
                     sent_from: 'ai',
                     content: result
                 }] as IMessage[]);
+
                 chunk = await reader.read();
             }
         }
@@ -134,12 +128,12 @@ function Chat({ params, refetch }: IChatComponents) {
         fetchChat(chatId).then((data) => {
             setMessages(data);
         });
+        refetch();
     }, [truthy]);
     useEffect(() => {
         if (containerRef.current) {
             (containerRef.current as HTMLDivElement).scrollTop = (containerRef.current as HTMLDivElement).scrollHeight;
         }
-        refetch();
     }, [messages]);
 
     return (
