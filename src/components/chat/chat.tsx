@@ -7,28 +7,32 @@ import { useRouter } from "next/navigation";
 import "@/app/components.css"
 import { updateChatLabel } from "@/utils/chats";
 import { RiLoader2Line } from "react-icons/ri";
+
 interface Message {
     message: IMessage,
     last_user_message: string,
     handleInputChange: () => void
     setMessagesState: (messages: any) => void
 }
+
 interface IMessage {
     sent_from: string
     content: string
 }
+
 export default function Chat() {
     const [input, setInput] = useState("")
     const router = useRouter()
     const [messages, setMessages] = useState<IMessage[]>([])
 
     const containerRef = useRef(null)
+
     const handleSubmit = async (e: any) => {
-        e.preventDefault();
+        e.preventDefault(); 
         const createNewChatPayload = await fetch('/api/chat/new', {
             method: 'GET'
         }).then(res => res.json()).then(data => {
-            console.log(data)
+            // console.log(data)
             updateChatLabel(data.chat_id, input)
             return data
         });
@@ -74,6 +78,15 @@ export default function Chat() {
 
         router.replace(`/chat/${chatId}`)
     };
+
+    const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        // console.log("why not working");
+        if (e.key === "Enter") {
+            handleSubmit(e);
+        }
+    };
+
     useEffect(() => {
         if (containerRef.current) {
             (containerRef.current as HTMLDivElement).scrollTop = (containerRef.current as HTMLDivElement).scrollHeight;
@@ -95,8 +108,14 @@ export default function Chat() {
             </div>
             <div className="absolute max-h-[10%] h-full bottom-3 xl:px-56 px-10  z-10 gap-3 w-full m-auto flex items-center justify-between ">
                 <div className="border w-full px-2 py-4 flex h-full items-center rounded-xl">
-                    <input placeholder="enter message" className="bg-transparent md:px-3 relative w-full h-full outline-none" value={input} onChange={e => setInput(e.target.value)} />
-                    <Button className="relative p-4 bg-white hover:bg-white w-10 h-10 text-lg" onClick={handleSubmit}>
+                <input placeholder="enter message" className="bg-transparent md:px-3 relative w-full h-full outline-none" 
+                        value={input} 
+                        onChange={e => setInput(e.target.value)} 
+                        onKeyUp={handleKeyDown} />
+                    <Button
+                        className="relative p-4 bg-white hover:bg-white w-10 h-10 text-lg"
+                        onClick={handleSubmit}
+                    >
                         <FaArrowUpLong size={40} className="text-neutral-900" />
                     </Button>
                 </div>
@@ -104,4 +123,3 @@ export default function Chat() {
         </div>
     )
 }
-

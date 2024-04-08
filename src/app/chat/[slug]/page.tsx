@@ -87,13 +87,13 @@ function Chat({ params, refetch }: IChatComponents) {
         //         'Content-Type': 'application/json'
         //     }
         // });
-        // const res = await fetch(`/api/stream`, {
-        //     method: 'POST',
-        //     body: JSON.stringify({ input, chatId }),
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     }
-        // });
+        const res = await fetch(`/api/stream`, {
+            method: 'POST',
+            body: JSON.stringify({ input, chatId }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
         const reader = res.body ? res.body.getReader() : null;
         const decoder = new TextDecoder();
         if (reader) {
