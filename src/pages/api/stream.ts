@@ -8,20 +8,20 @@ import { pipeline } from 'stream/promises';
 
 export default async function handler(req: NextRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
-
-    const body = await req.body
-    console.log(body)
+    const body = req.body;
+    console.log(body);
     if (body) {
+      //@
       const response = await fetch(`${process.env.NEXT_PUBLIC_API}/ai_response/${body.chatId}`, {
         method: 'POST',
         body: JSON.stringify({ input_str: body.input }),
         headers: {
           'Content-Type': 'application/json'
-        } 
+        }
       });
-      await pipeline(response.body, res)
+      await pipeline(response.body, res);
     } else {
-      res.status(400).json({ error: "Invalid request body" })
+      res.status(400).json({ error: "Invalid request body" });
     }
 
   } else {
