@@ -158,7 +158,11 @@ function Chat({ params, refetch }: IChatComponents) {
             </div>
             <div className="absolute max-h-[10%] h-full bottom-3 xl:px-56 px-10  z-10 gap-3 w-full m-auto flex items-center justify-between ">
                 <div className="border w-full px-2 py-4 flex h-full items-center rounded-xl">
-                    <input placeholder="enter message" className="bg-transparent md:px-3 relative w-full h-full outline-none" value={input} onChange={e => setInput(e.target.value)} />
+                    <input placeholder="enter message" className="bg-transparent md:px-3 relative w-full h-full outline-none" value={input} onChange={e => setInput(e.target.value)} onKeyPress={(e) => {
+                        if (e.key === 'Enter') {
+                            handleSubmit(e)
+                        }
+                    }} />
                     <Button className="relative p-4 bg-white hover:bg-white w-10 h-10 text-lg" onClick={handleSubmit}>
                         <FaArrowUpLong size={40} className="text-neutral-900" />
                     </Button>
