@@ -1,39 +1,28 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { NextRequest } from 'next/server';
+import { Stream } from 'stream';
+import { pipeline } from 'stream/promises';
 
-export const runtime = 'edge'
-export const maxDuration = 300
+// export const runtime = 'edge'
+// export const maxDuration = 300
+
 export default async function handler(req: NextRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
-    const body = await req.json()
+
+    const body = await req.body
     console.log(body)
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API}/ai_response/${body.chatId}`, {
-      method: 'POST',
-      body: JSON.stringify({ input_str: body.input }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-    const stream = new ReadableStream({
-      async start(controller) {
-        const reader = response.body ? response.body.getReader() : null;
-        const decoder = new TextDecoder();
-
-        if (reader) {
-          let chunk = await reader.read();
-          while (!chunk.done) {
-            let resChunk = decoder.decode(chunk.value, { stream: true });
-            //@ts-ignore
-            controller.enqueue(resChunk)
-            chunk = await reader.read();
-          }
-        }
-        controller.close()
-
-      }
-
-    })
-    return new Response(stream)
+    if (body) {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/ai_response/${body.chatId}`, {
+        method: 'POST',
+        body: JSON.stringify({ input_str: body.input }),
+        headers: {
+          'Content-Type': 'application/json'
+        } 
+      });
+      await pipeline(response.body, res)
+    } else {
+      res.status(400).json({ error: "Invalid request body" })
+    }
 
   } else {
     // Handle any other HTTP method
