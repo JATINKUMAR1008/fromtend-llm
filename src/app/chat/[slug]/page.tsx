@@ -119,12 +119,6 @@ function Chat({ params, refetch }: IChatComponents) {
         setTruthy(!truthy)
         setInput("")
     };
-    // useEffect(() => {
-    //     fetchChat(chatId).then((data) => {
-    //         setMessages(data)
-    //     })
-    //     console.log(messages)
-    // }, [])
 
     const fetchChat = async (chatId: string) => {
         const res = await fetch(`/api/chat/fetch?chatId=${chatId}`, {
