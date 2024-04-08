@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { NextRequest } from 'next/server';
 
 export const runtime = 'edge'
+export const maxDuration = 300
 export default async function handler(req: NextRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     const body = await req.json()
