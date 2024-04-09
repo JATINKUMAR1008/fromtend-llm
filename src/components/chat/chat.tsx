@@ -11,6 +11,7 @@ import ChatInput from "./chatInput";
 import { useDispatch } from "react-redux";
 import { fetchHistory } from "@/app/reducers/slice/global/global.action";
 import { useAppDispatch } from "@/app/reducers/store";
+import { changeFetchState } from "@/app/reducers/slice/global/global.slice";
 
 interface Message {
     message: IMessage,
@@ -76,6 +77,7 @@ export default function Chat() {
                 chunk = await reader.read();
             }
         }
+        dispatch(changeFetchState())
         router.replace(`/chat/${chatId}`)
     };
 
