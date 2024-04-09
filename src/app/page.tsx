@@ -22,14 +22,9 @@ export default function Home() {
     fetchHistory()
   }, [])
   return (
-    <main className="flex min-h-screen w-full items-center justify-between ">
-      <div className="max-w-[15%] h-full lg:w-full w-0">
-        <Sidebar chatHistory={chatHistory} open={open} setOpen={setOpen}/>
-      </div>
-      <div className="lg:max-w-[85%] h-full max-w-[100%] w-full">
-        <Header setOpen={setOpen} />
-        <Chat />
-      </div>
-    </main>
+    <>
+      <Header setOpen={setOpen} />
+      <Chat />
+    </>
   );
 }

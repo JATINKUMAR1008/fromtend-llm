@@ -33,36 +33,7 @@ interface IChat {
     chat_id: string
     label: string
 }
-export default function ChatPage({ params }: IPageProps) {
-    const [chatHistory, setChatHistory] = useState<IChat[]>([])
-
-    const [open, setOpen] = useState(false)
-    const fetchHistory = async () => {
-        const res = await fetch('/api/chat', {
-            method: 'GET'
-        });
-        const data = await res.json();
-        setChatHistory(data)
-    }
-    useEffect(() => {
-        fetchHistory()
-    }, [])
-    const refetchHistory = async () => {
-        fetchHistory()
-    }
-    return (
-        <main className="flex min-h-screen w-full items-center justify-between ">
-            <div className="max-w-[15%] h-full lg:w-full w-0">
-                <Sidebar chatId={params.slug} chatHistory={chatHistory} open={open} setOpen={setOpen} />
-            </div>
-            <div className="lg:max-w-[85%] h-full max-w-[100%] w-full">
-                <Header setOpen={setOpen} />
-                <Chat params={params} refetch={refetchHistory} />
-            </div>
-        </main>
-    )
-}
-function Chat({ params, refetch }: IChatComponents) {
+export default function Chat({ params }: IPageProps) {
     const chatId = params.slug
     const [input, setInput] = useState("")
     const [messages, setMessages] = useState<IMessage[]>([])
@@ -130,7 +101,7 @@ function Chat({ params, refetch }: IChatComponents) {
         fetchChat(chatId).then((data) => {
             setMessages(data);
         });
-        refetch();
+        // refetch();
     }, [truthy]);
     useEffect(() => {
         if (containerRef.current) {
