@@ -100,7 +100,7 @@ export default function Chat() {
                     </div>
                 )}
             </div>
-            <ChatInput onSubmit={(e) => handleSubmit} />
+            <ChatInput onSubmit={(e) => handleSubmit(e)} />
         </div>
     )
 }

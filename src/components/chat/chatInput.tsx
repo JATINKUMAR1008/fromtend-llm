@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { FaArrowUpLong } from "react-icons/fa6";
 import { useAppSelector } from "@/app/reducers/store";
@@ -28,6 +28,10 @@ export default function ChatInput({ onSubmit }: IProps) {
     const handleClick = () => {
         handleSubmit();
     }
+    useEffect(() => {
+        console.log("input", isFetching)
+        setInput("")
+    }, [isFetching])
 
     return (
         <div className="absolute max-h-[10%] h-full bottom-3 xl:px-56 px-10  z-10 gap-3 w-full m-auto flex items-center justify-between ">
