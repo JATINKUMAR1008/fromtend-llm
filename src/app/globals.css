@@ -76,21 +76,19 @@
 }
 .scrollbar-hidden::-webkit-scrollbar{
   width: 0px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: white;
 }
 /* Style for custom scrollbar */
 .scrollbar-custom::-webkit-scrollbar {
-  width: 10px; /* width of the scrollbar */
+  width: 5px; /* width of the scrollbar */
   background-color: transparent; /* background color of the scrollbar track */
-  border-radius: 5px;/* rounded edges */
+  border-radius: 5px;
+  height: 5px;/* rounded edges */
 }
 
 .scrollbar-custom::-webkit-scrollbar-thumb {
   background-color: #ccc; /* color of the scrollbar thumb */
   border-radius: 5px;
-  height: 10px;
+  height: 1px;
   margin-left: 2px; /* rounded edges */
 }
 
