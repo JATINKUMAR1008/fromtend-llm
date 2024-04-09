@@ -19,15 +19,15 @@ export default function Sidebar({ chatId, chatHistory, open, setOpen }: Iprops) 
     const router = useRouter()
     return (
         <>
-            <div className="w-full min-h-screen hidden px-4 py-4 lg:flex flex-col  bg-neutral-900">
-                <Button variant="outline" className="w-full sticky  bg-transparent" onClick={() => router.push("/")}>
+            <div className="w-full h-screen hidden px-4 py-4 lg:flex flex-col  bg-neutral-900 overflow-auto">
+                <Button variant="outline" className="w-full sticky bg-transparent" onClick={() => router.push("/")}>
                     Create New Chat
                 </Button>
-                {chatHistory && <div className="mt-5 flex flex-col items-center text-muted max-h-[90%] overflow-y-auto gap-1">
+                {chatHistory && <div className="mt-5 flex flex-col items-center text-muted max-h-[90%] h-full  overflow-auto scrollbar-custom gap-1">
                     <h1 className="w-full text-left text-xs text-muted mb-5">History</h1>
                     {
                         chatHistory.length > 0 ? chatHistory.map((item, index) => (
-                            <div key={index} className={item?.chat_id === chatId ? "w-full px-4 py-2 rounded-md cursor-pointer bg-neutral-800 text-sm h-10 overflow-hidden text-ellipsis whitespace-nowrap" : "w-full px-4 py-2 rounded-md cursor-pointer hover:bg-neutral-800 text-sm h-10 overflow-hidden text-ellipsis whitespace-nowrap"} onClick={() => router.push(`/chat/${item.chat_id}`)}>
+                            <div key={index} className={item?.chat_id === chatId ? "w-full px-4 py-2 rounded-md cursor-pointer bg-neutral-800 text-sm min-h-10 overflow-hidden text-ellipsis whitespace-nowrap" : "w-full px-4 py-2 rounded-md cursor-pointer hover:bg-neutral-800 text-sm min-h-10 overflow-hidden text-ellipsis whitespace-nowrap"} onClick={() => router.push(`/chat/${item.chat_id}`)}>
                                 {item.label}
                             </div>
                         )) : (
@@ -39,16 +39,16 @@ export default function Sidebar({ chatId, chatHistory, open, setOpen }: Iprops) 
                     }
                 </div>}
             </div>
-            <div className={open ? "flex relative lg:hidden left-0 min-w-[300px] items-center gap-2  z-20 h-screen duration-100 ease-in-out" : "flex lg:hidden relative left-[-310px] w-0 items-center gap-2  z-20 h-screen duration-100 ease-in-out"}>
+            <div className={open ? "flex relative lg:hidden left-0 min-w-[300px] items-center gap-2   z-20 h-screen duration-100 ease-in-out" : "flex lg:hidden relative left-[-310px] w-0 items-center gap-2  z-20 h-screen duration-100 ease-in-out"}>
                 <div className="px-4 py-4 flex-col bg-neutral-900 w-full h-screen ">
                     <Button variant="outline" className="w-full sticky  bg-transparent" onClick={() => router.push("/")}>
                         Create New Chat
                     </Button>
-                    {chatHistory ? <div className="mt-5 flex flex-col items-center max-h-[90%] text-muted overflow-y-auto gap-1">
+                    {chatHistory ? <div className="mt-5 flex flex-col items-center max-h-[90%] h-full border text-muted overflow-y-auto gap-1">
                         <h1 className="w-full text-left text-xs text-muted mb-5">History</h1>
                         {
                             chatHistory.length > 0 ? chatHistory.map((item, index) => (
-                                <div key={index} className={item?.chat_id === chatId ? "w-full px-4 py-2 rounded-md cursor-pointer bg-neutral-800 text-sm h-10 overflow-hidden text-ellipsis whitespace-nowrap" : "w-full px-4 py-2 rounded-md cursor-pointer hover:bg-neutral-800 text-sm h-10 overflow-hidden text-ellipsis whitespace-nowrap"} onClick={() => router.push(`/chat/${item.chat_id}`)}>
+                                <div key={index} className={item?.chat_id === chatId ? "w-full px-4 py-2 rounded-md cursor-pointer bg-neutral-800 text-sm min-h-10 overflow-hidden text-ellipsis whitespace-nowrap" : "w-full px-4 py-2 rounded-md cursor-pointer hover:bg-neutral-800 text-sm min-h-10 overflow-hidden text-ellipsis whitespace-nowrap"} onClick={() => router.push(`/chat/${item.chat_id}`)}>
                                     {item.label}
                                 </div>
                             )) : (
