@@ -23,7 +23,7 @@ export default function Sidebar({ chatId, chatHistory, open, setOpen }: Iprops) 
                 <Button variant="outline" className="w-full sticky  bg-transparent" onClick={() => router.push("/")}>
                     Create New Chat
                 </Button>
-                {chatHistory && <div className="mt-5 flex flex-col items-center text-muted overflow-y-auto gap-1">
+                {chatHistory && <div className="mt-5 flex flex-col items-center text-muted max-h-[90%] overflow-y-auto gap-1">
                     <h1 className="w-full text-left text-xs text-muted mb-5">History</h1>
                     {
                         chatHistory.length > 0 ? chatHistory.map((item, index) => (
@@ -44,7 +44,7 @@ export default function Sidebar({ chatId, chatHistory, open, setOpen }: Iprops) 
                     <Button variant="outline" className="w-full sticky  bg-transparent" onClick={() => router.push("/")}>
                         Create New Chat
                     </Button>
-                    {chatHistory ? <div className="mt-5 flex flex-col items-center text-muted overflow-y-auto gap-1">
+                    {chatHistory ? <div className="mt-5 flex flex-col items-center max-h-[90%] text-muted overflow-y-auto gap-1">
                         <h1 className="w-full text-left text-xs text-muted mb-5">History</h1>
                         {
                             chatHistory.length > 0 ? chatHistory.map((item, index) => (
