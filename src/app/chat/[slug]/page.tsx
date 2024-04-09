@@ -8,6 +8,11 @@ import "@/app/components.css"
 import { RiLoader2Line } from "react-icons/ri";
 import Sidebar from "@/components/sidebar/sidebar"
 import Header from "@/components/header/header"
+import ChatInput from "@/components/chat/chatInput"
+import { useAppDispatch, useAppSelector } from "@/app/reducers/store"
+import { fetchHistory, fetchMessages } from "@/app/reducers/slice/global/global.action"
+import { changeFetchState } from "@/app/reducers/slice/global/global.slice"
+import Loading from "@/app/loading"
 interface IPageProps {
     params: {
         slug: string
@@ -34,43 +39,13 @@ interface IChat {
     label: string
 }
 export default function ChatPage({ params }: IPageProps) {
-    const [chatHistory, setChatHistory] = useState<IChat[]>([])
-
-    const [open, setOpen] = useState(false)
-    const fetchHistory = async () => {
-        const res = await fetch('/api/chat', {
-            method: 'GET'
-        });
-        const data = await res.json();
-        setChatHistory(data)
-    }
-    useEffect(() => {
-        fetchHistory()
-    }, [])
-    const refetchHistory = async () => {
-        fetchHistory()
-    }
-    return (
-        <main className="flex min-h-screen w-full items-center justify-between ">
-            <div className="max-w-[15%] h-full lg:w-full w-0">
-                <Sidebar chatId={params.slug} chatHistory={chatHistory} open={open} setOpen={setOpen} />
-            </div>
-            <div className="lg:max-w-[85%] h-full max-w-[100%] w-full">
-                <Header setOpen={setOpen} />
-                <Chat params={params} refetch={refetchHistory} />
-            </div>
-        </main>
-    )
-}
-function Chat({ params, refetch }: IChatComponents) {
     const chatId = params.slug
-    const [input, setInput] = useState("")
+    const dispatch = useAppDispatch()
+    const { messages: fetchedMessages, isLoading } = useAppSelector(state => state.global)
     const [messages, setMessages] = useState<IMessage[]>([])
-    const [loading, setLoading] = useState(false)
-    const [truthy, setTruthy] = useState(false)
+
     const containerRef = useRef(null)
-    const handleSubmit = async (e: any) => {
-        e.preventDefault();
+    const handleSubmit = async (input: string) => {
         //@ts-ignore
         setMessages([...messages, {
             sent_from: 'user',
@@ -87,20 +62,12 @@ function Chat({ params, refetch }: IChatComponents) {
                 'Content-Type': 'application/json'
             }
         });
-        // const res = await fetch(`/api/stream`, {
-        //     method: 'POST',
-        //     body: JSON.stringify({ input, chatId }),
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     }
-        // });
         const reader = res.body ? res.body.getReader() : null;
         const decoder = new TextDecoder();
         if (reader) {
             let chunk = await reader.read();
             let result = '';
             //@ts-ignore
-
             while (!chunk.done) {
                 result += decoder.decode(chunk.value, { stream: true });
                 // console.log(result)
@@ -114,24 +81,20 @@ function Chat({ params, refetch }: IChatComponents) {
                 }] as IMessage[]);
 
                 chunk = await reader.read();
+                // dispatch(fetchMessages(chatId))
+
             }
         }
-        setTruthy(!truthy)
-        setInput("")
+        dispatch(changeFetchState())
     };
 
-    const fetchChat = async (chatId: string) => {
-        const res = await fetch(`/api/chat/fetch?chatId=${chatId}`, {
-            method: 'GET'
-        }).then(res => res.json()).then(data => { return data });
-        return res;
-    }
     useEffect(() => {
-        fetchChat(chatId).then((data) => {
-            setMessages(data);
-        });
-        refetch();
-    }, [truthy]);
+        dispatch(fetchMessages(chatId))
+    }, [])
+    useEffect(() => {
+        setMessages(fetchedMessages)
+    }, [fetchedMessages])
+
     useEffect(() => {
         if (containerRef.current) {
             (containerRef.current as HTMLDivElement).scrollTop = (containerRef.current as HTMLDivElement).scrollHeight;
@@ -140,7 +103,7 @@ function Chat({ params, refetch }: IChatComponents) {
 
     return (
         <div className="w-full h-screen relative flex justify-center scrollbar-hidden">
-            <div className=" max-h-[83%] mt-10  py-3 flex flex-col gap-1 overflow-y-auto scrollbar-hidden" ref={containerRef}>
+            {!isLoading ? <div className=" max-h-[83%] mt-10  py-3 flex flex-col gap-1 overflow-y-auto scrollbar-hidden" ref={containerRef}>
                 {messages.length > 0 ? messages?.map((message, index) => (
                     //@ts-ignore
                     <ChatBox key={index} message={message} />
@@ -149,19 +112,10 @@ function Chat({ params, refetch }: IChatComponents) {
                         <RiLoader2Line size={50} className="animate-spin text-neutral-300" />
                     </div>
                 )}
-            </div>
-            <div className="absolute max-h-[10%] h-full bottom-3 xl:px-56 px-10  z-10 gap-3 w-full m-auto flex items-center justify-between ">
-                <div className="border w-full px-2 py-4 flex h-full items-center rounded-xl">
-                    <input placeholder="enter message" className="bg-transparent md:px-3 relative w-full h-full outline-none" value={input} onChange={e => setInput(e.target.value)} onKeyPress={(e) => {
-                        if (e.key === 'Enter') {
-                            handleSubmit(e)
-                        }
-                    }} />
-                    <Button className="relative p-4 bg-white hover:bg-white w-10 h-10 text-lg" onClick={handleSubmit}>
-                        <FaArrowUpLong size={40} className="text-neutral-900" />
-                    </Button>
-                </div>
-            </div>
+            </div> : <div className="w-full h-full items-center justify-center flex">
+                <RiLoader2Line size={50} className="animate-spin text-neutral-300" />
+            </div>}
+            <ChatInput onSubmit={(e) => handleSubmit(e)} />
         </div>
     )
 }
