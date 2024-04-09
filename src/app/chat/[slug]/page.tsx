@@ -139,8 +139,8 @@ function Chat({ params, refetch }: IChatComponents) {
     }, [messages]);
 
     return (
-        <div className="w-full h-screen relative flex justify-center">
-            <div className=" max-h-[83%] mt-10  py-3 flex flex-col gap-1 overflow-y-auto" ref={containerRef}>
+        <div className="w-full h-screen relative flex justify-center scrollbar-hidden">
+            <div className=" max-h-[83%] mt-10  py-3 flex flex-col gap-1 overflow-y-auto scrollbar-hidden" ref={containerRef}>
                 {messages.length > 0 ? messages?.map((message, index) => (
                     //@ts-ignore
                     <ChatBox key={index} message={message} />

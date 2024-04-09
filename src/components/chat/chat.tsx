@@ -28,7 +28,7 @@ export default function Chat() {
     const containerRef = useRef(null)
 
     const handleSubmit = async (e: any) => {
-        e.preventDefault(); 
+        e.preventDefault();
         const createNewChatPayload = await fetch('/api/chat/new', {
             method: 'GET'
         }).then(res => res.json()).then(data => {
@@ -94,8 +94,8 @@ export default function Chat() {
     }, [messages])
 
     return (
-        <div className="w-full h-screen relative flex justify-center">
-            <div className=" max-h-[83%] mt-10 min-w-[100%]  py-3 flex flex-col gap-1 overflow-y-auto" ref={containerRef}>
+        <div className="w-full h-screen relative flex justify-center scrollbar-hidden">
+            <div className=" max-h-[83%] mt-10 min-w-[100%]  py-3 flex flex-col gap-1 overflow-y-auto scrollbar-hidden" ref={containerRef}>
                 {messages.length > 0 ? messages?.map((message, index) => (
                     //@ts-ignore
                     <ChatBox key={index} message={message} />
@@ -108,9 +108,9 @@ export default function Chat() {
             </div>
             <div className="absolute max-h-[10%] h-full bottom-3 xl:px-56 px-10  z-10 gap-3 w-full m-auto flex items-center justify-between ">
                 <div className="border w-full px-2 py-4 flex h-full items-center rounded-xl">
-                <input placeholder="enter message" className="bg-transparent md:px-3 relative w-full h-full outline-none" 
-                        value={input} 
-                        onChange={e => setInput(e.target.value)} 
+                    <input placeholder="enter message" className="bg-transparent md:px-3 relative w-full h-full outline-none"
+                        value={input}
+                        onChange={e => setInput(e.target.value)}
                         onKeyUp={handleKeyDown} />
                     <Button
                         className="relative p-4 bg-white hover:bg-white w-10 h-10 text-lg"
