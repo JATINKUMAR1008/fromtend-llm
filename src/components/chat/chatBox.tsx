@@ -13,6 +13,9 @@ import ai_img from "../../../public/ai.png"
 import Markdown from 'react-markdown'
 import { CiUser } from "react-icons/ci";
 import remarkGfm from 'remark-gfm'
+import remarkMath from 'remark-math'
+import rehypeKatex from 'rehype-katex'
+import 'katex/dist/katex.min.css'
 export const ChatBox = ({ message }: Message) => {
 
     return message.sent_from === 'ai' ? (
@@ -20,7 +23,7 @@ export const ChatBox = ({ message }: Message) => {
             <div className="flex gap-2 items-start">
                 <Image src={ai_img} alt="ai" width={40} height={40} />
                 <div className=" p-2 rounded-md markdown_comp overflow-auto scrollbar-custom">
-                    <Markdown remarkPlugins={[remarkGfm]} >{message.content}</Markdown>
+                    <Markdown remarkPlugins={[remarkGfm, remarkMath]} rehypePlugins={[rehypeKatex]}>{message.content}</Markdown>
                 </div>
             </div>
         </div>
