@@ -79,19 +79,18 @@
 }
 /* Style for custom scrollbar */
 .scrollbar-custom::-webkit-scrollbar {
-  width: 5px; /* width of the scrollbar */
+  width: 0px; /* width of the scrollbar */
   background-color: transparent; /* background color of the scrollbar track */
   border-radius: 5px;
-  height: 5px;/* rounded edges */
+  height: 5px;/* rounded edges */  
 }
 
 .scrollbar-custom::-webkit-scrollbar-thumb {
-  background-color: #ccc; /* color of the scrollbar thumb */
+  background-color: #212121; /* color of the scrollbar thumb */
   border-radius: 5px;
-  height: 1px;
-  margin-left: 2px; /* rounded edges */
+   /* rounded edges */
 }
 
 .scrollbar-custom::-webkit-scrollbar-thumb:hover {
-  background-color: #999; /* color of the scrollbar thumb on hover */
+  background-color: hsla(0, 0%, 100%, .1) /* color of the scrollbar thumb on hover */
 }

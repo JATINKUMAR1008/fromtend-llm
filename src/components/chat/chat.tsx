@@ -108,7 +108,7 @@ export default function Chat() {
                             <h1 className="mt-1 text-2xl font-sans">Hello, I{"'"}m GAIA</h1>
                             <p className="text-md mt-1 text-neutral-400 text-center">Ask me anything or pick a suggestion to get started</p>
                         </div>
-                        <div className="">
+                        <div className="mb-2">
                             <SuggestedQuestions onClick={(e) => setQuestion(e)} />
                         </div>
                     </div>
