@@ -38,7 +38,7 @@ export default function ChatInput({ onSubmit, suggestions }: IProps) {
     }, [suggestions])
 
     return (
-        <div className="absolute md:h-[10%] h-[15%] bottom-3 lg:px-0 bg-[#202026] z-10 gap-3 w-full m-auto flex flex-col items-center justify-start ">
+        <div className="absolute h-[110px] bottom-3 lg:px-0 bg-[#202026] z-10 gap-3 w-full m-auto flex flex-col items-center justify-start ">
             <div className="border w-full max-h-[70px] h-full px-2 gap-2 flex items-center rounded-2xl">
                 <input placeholder="Enter message" className="bg-transparent md:px-3 text-sm relative w-full h-full outline-none"
                     value={input}

@@ -7,6 +7,7 @@ import { RiLoader2Line } from "react-icons/ri";
 import * as Yup from 'yup'
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { toast } from "../ui/use-toast"
 const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Invalid Email').required('Required'),
     password: Yup.string().required('Required')
@@ -30,8 +31,17 @@ export default function LoginForm() {
                 },
                 body: JSON.stringify(values),
             }).then((res) => res.json());
+            if (!data.status) {
+                toast({
+                    title: "Authentication: Failed",
+                    description: data.response,
+                    variant: "destructive",
+                })
+            } else {
+                router.push("/")
+            }
             setLoading(false)
-            router.push("/")
+
         },
         validationSchema: LoginSchema
     })

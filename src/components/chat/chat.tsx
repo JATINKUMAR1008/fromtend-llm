@@ -97,7 +97,7 @@ export default function Chat() {
 
     return (
         <div className="xl:w-[60%] md:w-[80%] w-[90%] m-auto h-screen relative flex justify-center scrollbar-hidden">
-            <div className="h-[calc(84%-3.5rem)] md:h-[calc(89%-3.5rem)] min-w-full   mt-14 pt-5 pb-2 flex flex-col gap-1 overflow-y-auto scrollbar-hidden" ref={containerRef}>
+            <div className="h-[calc(100%-3.5rem-110px)] min-w-full   mt-14 pt-5 pb-2 flex flex-col gap-1 overflow-y-auto scrollbar-hidden" ref={containerRef}>
                 {messages.length > 0 ? messages?.map((message, index) => (
                     //@ts-ignore
                     <ChatBox key={index} message={message} />
