@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 import { usePathname, useRouter } from "next/navigation";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { RiLoader2Line } from "react-icons/ri";
-import { useDispatch } from "react-redux";
+import { PiPencilSimpleLineThin } from "react-icons/pi";
 import { useAppDispatch, useAppSelector } from "@/app/reducers/store";
 import { changeSidebarState } from "@/app/reducers/slice/global/global.slice";
 import { fetchHistory } from "@/app/reducers/slice/global/global.action";
@@ -30,15 +30,19 @@ export default function Sidebar() {
     }, [])
     return (
         <>
-            <div className="w-full h-screen hidden px-4 py-4 md:flex flex-col max-w-[300px]  bg-neutral-900 overflow-auto">
-                <Button variant="outline" className="w-full sticky bg-transparent" onClick={() => router.push("/")}>
-                    Create New Chat
-                </Button>
-                {chatHistory && <div className="mt-5 flex flex-col items-center text-muted max-h-[90%] h-full px-2  overflow-auto scrollbar-custom gap-1">
-                    <h1 className="w-full text-left text-xs text-muted mb-5">History</h1>
+            <div className="w-full h-screen hidden  py-4 md:flex flex-col max-w-[250px]  bg-[#1B1B20] overflow-auto border-r-[1px] border-neutral-600">
+                <div className="px-4">
+                    <Button variant="default" className="w-full sticky bg-[#313035] hover:bg-[#3d3c40]" onClick={() => router.push("/")}>
+                        <PiPencilSimpleLineThin size={20} className="mr-2"/>
+                        Create new chat
+                    </Button>
+                </div>
+
+                {chatHistory && <div className="mt-5 flex flex-col items-center text-muted max-h-[90%] h-full overflow-auto scrollbar-custom gap-1">
+                    <h1 className="w-full text-left text-xs text-muted mb-5 px-3">History</h1>
                     {
                         chatHistory.length > 0 ? chatHistory.map((item, index) => (
-                            <div key={index} className={item?.chat_id === currentChat ? "w-full px-4 py-2 rounded-md cursor-pointer bg-neutral-800 text-sm min-h-10 overflow-hidden text-ellipsis whitespace-nowrap" : "w-full px-4 py-2 rounded-md cursor-pointer hover:bg-neutral-800 text-sm min-h-10 overflow-hidden text-ellipsis whitespace-nowrap"} onClick={() => router.push(`/chat/${item.chat_id}`)}>
+                            <div key={index} className={item?.chat_id === currentChat ? "w-full p-3 min-h-11 cursor-pointer bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap" : "w-full p-3 cursor-pointer min-h-11 hover:bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap"} onClick={() => router.push(`/chat/${item.chat_id}`)}>
                                 {item.label}
                             </div>
                         )) : (
@@ -59,7 +63,7 @@ export default function Sidebar() {
                         <h1 className="w-full text-left text-xs text-muted mb-5">History</h1>
                         {
                             chatHistory.length > 0 ? chatHistory.map((item, index) => (
-                                <div key={index} className={item?.chat_id === currentChat ? "w-full px-4 py-2 rounded-md cursor-pointer bg-neutral-800 text-sm min-h-10 overflow-hidden text-ellipsis whitespace-nowrap" : "w-full px-4 py-2 rounded-md cursor-pointer hover:bg-neutral-800 text-sm min-h-10 overflow-hidden text-ellipsis whitespace-nowrap"} onClick={() => {
+                                <div key={index} className={item?.chat_id === currentChat ? "w-full p-3 rounded-md cursor-pointer bg-[#313035] text-sm min-h-11 overflow-hidden text-ellipsis whitespace-nowrap" : "w-full p-3 rounded-md cursor-pointer hover:bg-[#313035] text-sm min-h-11 overflow-hidden text-ellipsis whitespace-nowrap"} onClick={() => {
                                     dispatch(changeSidebarState())
                                     router.push(`/chat/${item.chat_id}`)
                                 }}>
