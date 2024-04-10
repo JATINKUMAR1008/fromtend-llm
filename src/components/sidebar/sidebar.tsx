@@ -3,7 +3,7 @@ import { Button } from "../ui/button";
 import { usePathname, useRouter } from "next/navigation";
 import { MdKeyboardArrowLeft, MdDelete, MdExitToApp } from "react-icons/md"; // Import MdExitToApp icon
 import { RiLoader2Line } from "react-icons/ri";
-import { useDispatch } from "react-redux";
+import { PiPencilSimpleLineThin } from "react-icons/pi";
 import { useAppDispatch, useAppSelector } from "@/app/reducers/store";
 import { changeSidebarState } from "@/app/reducers/slice/global/global.slice";
 import { fetchHistory } from "@/app/reducers/slice/global/global.action";
@@ -36,41 +36,22 @@ export default function Sidebar() {
 
     return (
         <>
-            <div className="w-full h-screen hidden py-4 lg:flex flex-col  bg-[#1b1b20] overflow-auto">
+            <div className="w-full h-screen hidden  py-4 md:flex flex-col max-w-[250px]  bg-[#1B1B20] overflow-auto border-r-[1px] border-neutral-600">
                 <div className="px-4">
-                <Button className="w-full sticky bg-[#28282e] gap-1" onClick={() => router.push("/")}>
-                    <IoCreateOutline />
-                    Create New Chat
-                </Button>
+                    <Button variant="default" className="w-full sticky bg-[#313035] hover:bg-[#3d3c40]" onClick={() => router.push("/")}>
+                        <PiPencilSimpleLineThin size={20} className="mr-2"/>
+                        Create new chat
+                    </Button>
                 </div>
-                {chatHistory && (
-                    <div className="mt-5 flex flex-col items-center text-muted max-h-[90%] h-full  overflow-auto scrollbar-custom gap-1">
-                        <h1 className="w-full px-4 text-left text-xs text-muted mb-5">History</h1>
-                        {chatHistory.length > 0 ? (
-                            chatHistory.map((item, index) => (
-                                <div
-                                    key={index}
-                                    className={`flex flex-row justify-between items-center w-full px-4 py-2 cursor-pointer bg-[#1b1b20] text-sm min-h-10 overflow-hidden text-ellipsis whitespace-nowrap ${
-                                        item.chat_id === currentChat ? "bg-[#28282e]" : "bg-[#1b1b20] hover:bg-[#28282e]"
-                                    }`}
-                                    onClick={() => router.push(`/chat/${item.chat_id}`)}
-                                    onMouseEnter={() => setHoveredChat(item.chat_id)}
-                                    onMouseLeave={() => setHoveredChat(null)}
-                                >
-                                    <p className="flex-1 truncate">{item.label}</p>
-                                    {hoveredChat === item.chat_id && (
-                                        <MdDelete
-                                            size={20}
-                                            className="text-red-600 cursor-pointer"
-                                            onClick={(e) => {
-                                                e.stopPropagation(); // Prevent triggering parent click event
-                                                // Your delete logic here
-                                            }}
-                                        />
-                                    )}
-                                </div>
-                            ))
-                        ) : (
+
+                {chatHistory && <div className="mt-5 flex flex-col items-center text-muted max-h-[90%] h-full overflow-auto scrollbar-custom gap-1">
+                    <h1 className="w-full text-left text-xs text-muted mb-5 px-3">History</h1>
+                    {
+                        chatHistory.length > 0 ? chatHistory.map((item, index) => (
+                            <div key={index} className={item?.chat_id === currentChat ? "w-full p-3 min-h-11 cursor-pointer bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap" : "w-full p-3 cursor-pointer min-h-11 hover:bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap"} onClick={() => router.push(`/chat/${item.chat_id}`)}>
+                                {item.label}
+                            </div>
+                        )) : (
                             <div className="w-full h-full flex items-center justify-center">
                                 <RiLoader2Line size={20} className="animate-spin text-neutral-300" />
                             </div>
@@ -101,35 +82,17 @@ export default function Sidebar() {
                         <IoCreateOutline />
                         Create New Chat
                     </Button>
-                    </div>
-                    {chatHistory ? (
-                        <div className="mt-5 flex flex-col items-center max-h-[90%] h-full scrollbar-custom px-2 text-muted overflow-y-auto gap-1">
-                            <h1 className="w-full px-4 text-left text-xs text-muted mb-5">History</h1>
-                            {chatHistory.length > 0 ? (
-                                chatHistory.map((item, index) => (
-                                    <div
-                                        key={index}
-                                        className={`flex flex-row justify-between items-center w-full px-4 py-2 rounded-md cursor-pointer bg-[#1b1b20] text-sm min-h-10 overflow-hidden text-ellipsis whitespace-nowrap ${
-                                            item.chat_id === currentChat ? "bg-[#28282e]" : "bg-[#1b1b20] hover:bg-[#28282e]"
-                                        }`}
-                                        onClick={() => router.push(`/chat/${item.chat_id}`)}
-                                        onMouseEnter={() => setHoveredChat(item.chat_id)}
-                                        onMouseLeave={() => setHoveredChat(null)}
-                                    >
-                                        <p className="flex-1 truncate">{item.label}</p>
-                                        {hoveredChat === item.chat_id && (
-                                            <MdDelete
-                                                size={20}
-                                                className="text-red-600 cursor-pointer"
-                                                onClick={(e) => {
-                                                    e.stopPropagation(); // Prevent triggering parent click event
-                                                    // Your delete logic here
-                                                }}
-                                            />
-                                        )}
-                                    </div>
-                                ))
-                            ) : (
+                    {chatHistory ? <div className="mt-5 flex flex-col items-center max-h-[90%] h-full scrollbar-custom  text-muted overflow-y-auto gap-1">
+                        <h1 className="w-full text-left text-xs text-muted mb-5">History</h1>
+                        {
+                            chatHistory.length > 0 ? chatHistory.map((item, index) => (
+                                <div key={index} className={item?.chat_id === currentChat ? "w-full p-3 rounded-md cursor-pointer bg-[#313035] text-sm min-h-11 overflow-hidden text-ellipsis whitespace-nowrap" : "w-full p-3 rounded-md cursor-pointer hover:bg-[#313035] text-sm min-h-11 overflow-hidden text-ellipsis whitespace-nowrap"} onClick={() => {
+                                    dispatch(changeSidebarState())
+                                    router.push(`/chat/${item.chat_id}`)
+                                }}>
+                                    {item.label}
+                                </div>
+                            )) : (
                                 <div className="w-full h-full flex items-center justify-center">
                                     <RiLoader2Line size={20} className="animate-spin text-neutral-300" />
                                 </div>

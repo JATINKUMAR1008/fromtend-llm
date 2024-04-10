@@ -7,8 +7,8 @@ export default function Template({ children }: { children: React.ReactNode }) {
 
     return pathname !== "/auth/login" ? (
         <ReduxProvider>
-            <main className="flex min-h-screen w-full items-center justify-between ">
-                <div className="max-w-[20%] h-full lg:w-full w-0">
+            <main className="flex min-h-screen w-full">
+                <div className="h-full max-w-[250px] md:w-full w-0">
                     <Sidebar />
                 </div>
                 <div className="lg:max-w-[80%] h-full max-w-[100%] w-full">
