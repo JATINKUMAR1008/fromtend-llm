@@ -102,19 +102,27 @@ export default function ChatPage({ params }: IPageProps) {
     }, [messages]);
 
     return (
-        <div className="w-full h-screen relative flex justify-center scrollbar-hidden">
-            {!isLoading ? <div className=" max-h-[83%] mt-10  py-3 flex flex-col gap-1 overflow-y-auto scrollbar-hidden" ref={containerRef}>
-                {messages.length > 0 ? messages?.map((message, index) => (
-                    //@ts-ignore
-                    <ChatBox key={index} message={message} />
-                )) : (
-                    <div className="w-full h-full items-center justify-center flex">
+        <div className="xl:w-[60%] md:w-[70%] w-[90%] m-auto h-screen relative flex justify-center scrollbar-hidden">
+            {
+                !isLoading ?
+                    (<div className=" max-h-[75%] md:max-h-[80%] mt-14 pt-5 pb-2 flex flex-col items-start w-full gap-1 overflow-y-auto scrollbar-hidden" ref={containerRef}>
+                        {
+                            messages.length > 0 ?
+                                messages?.map((message, index) => (
+                                    //@ts-ignore
+                                    <ChatBox key={index} message={message} />
+                                )) :
+                                (
+                                    <div className="w-full h-full items-center justify-center flex">
+                                        <RiLoader2Line size={50} className="animate-spin text-neutral-300" />
+                                    </div>
+                                )
+                        }
+                    </div>) :
+                    (<div className="w-full h-full items-center justify-center flex">
                         <RiLoader2Line size={50} className="animate-spin text-neutral-300" />
-                    </div>
-                )}
-            </div> : <div className="w-full h-full items-center justify-center flex">
-                <RiLoader2Line size={50} className="animate-spin text-neutral-300" />
-            </div>}
+                    </div>)
+            }
             <ChatInput onSubmit={(e) => handleSubmit(e)} />
         </div>
     )

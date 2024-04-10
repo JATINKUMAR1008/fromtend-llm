@@ -30,7 +30,7 @@ export default function Sidebar() {
     }, [])
     return (
         <>
-            <div className="w-full h-screen hidden px-4 py-4 lg:flex flex-col  bg-neutral-900 overflow-auto">
+            <div className="w-full h-screen hidden px-4 py-4 md:flex flex-col max-w-[300px]  bg-neutral-900 overflow-auto">
                 <Button variant="outline" className="w-full sticky bg-transparent" onClick={() => router.push("/")}>
                     Create New Chat
                 </Button>
@@ -59,7 +59,10 @@ export default function Sidebar() {
                         <h1 className="w-full text-left text-xs text-muted mb-5">History</h1>
                         {
                             chatHistory.length > 0 ? chatHistory.map((item, index) => (
-                                <div key={index} className={item?.chat_id === currentChat ? "w-full px-4 py-2 rounded-md cursor-pointer bg-neutral-800 text-sm min-h-10 overflow-hidden text-ellipsis whitespace-nowrap" : "w-full px-4 py-2 rounded-md cursor-pointer hover:bg-neutral-800 text-sm min-h-10 overflow-hidden text-ellipsis whitespace-nowrap"} onClick={() => router.push(`/chat/${item.chat_id}`)}>
+                                <div key={index} className={item?.chat_id === currentChat ? "w-full px-4 py-2 rounded-md cursor-pointer bg-neutral-800 text-sm min-h-10 overflow-hidden text-ellipsis whitespace-nowrap" : "w-full px-4 py-2 rounded-md cursor-pointer hover:bg-neutral-800 text-sm min-h-10 overflow-hidden text-ellipsis whitespace-nowrap"} onClick={() => {
+                                    dispatch(changeSidebarState())
+                                    router.push(`/chat/${item.chat_id}`)
+                                }}>
                                     {item.label}
                                 </div>
                             )) : (
