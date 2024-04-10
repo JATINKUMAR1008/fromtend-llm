@@ -105,7 +105,7 @@ export default function ChatPage({ params }: IPageProps) {
         <div className="xl:w-[60%] md:w-[70%] w-[90%] m-auto h-screen relative flex justify-center scrollbar-hidden">
             {
                 !isLoading ?
-                    (<div className=" max-h-[75%] md:max-h-[80%] mt-14 pt-5 pb-2 flex flex-col items-start w-full gap-1 overflow-y-auto scrollbar-hidden" ref={containerRef}>
+                    (<div className=" max-h-[75%] md:max-h-[80%] mt-14 pt-5 pb-2 flex flex-col items-start w-full gap-1 overflow-y-auto overflow-x-hidden scrollbar-hidden" ref={containerRef}>
                         {
                             messages.length > 0 ?
                                 messages?.map((message, index) => (
