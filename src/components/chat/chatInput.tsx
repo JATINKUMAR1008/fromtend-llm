@@ -7,9 +7,10 @@ import { changeFetchState } from "@/app/reducers/slice/global/global.slice";
 
 interface IProps {
     onSubmit: (input: string) => void
+    suggestions?: string
 }
 
-export default function ChatInput({ onSubmit }: IProps) {
+export default function ChatInput({ onSubmit, suggestions }: IProps) {
     const [input, setInput] = useState("")
     const dispatch = useDispatch()
     const isFetching = useAppSelector(state => state.global.isFetching)
@@ -21,7 +22,7 @@ export default function ChatInput({ onSubmit }: IProps) {
     const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
         e.preventDefault();
         // console.log("why not working");
-        if (e.key === "Enter") {
+        if (e.key === "Enter" && input.length > 0) {
             handleSubmit();
         }
     };
@@ -32,24 +33,29 @@ export default function ChatInput({ onSubmit }: IProps) {
         console.log("input", isFetching)
         setInput("")
     }, [isFetching])
+    useEffect(() => {
+        setInput(suggestions || "")
+    }, [suggestions])
 
     return (
-        <div className="absolute max-h-[10%] h-full bottom-3 xl:px-56 px-10  z-10 gap-3 w-full m-auto flex items-center justify-between ">
-            <div className="border w-full px-2 py-4 flex h-full items-center rounded-xl">
-                <input placeholder="enter message" className="bg-transparent md:px-3 relative w-full h-full outline-none"
+        <div className="absolute md:max-h-[10%] max-h-[15%] h-full bottom-3 lg:px-0  z-10 gap-3 w-full m-auto flex flex-col items-center justify-start ">
+            <div className="border w-full max-h-[70px] h-full px-2 gap-2 flex items-center rounded-2xl">
+                <input placeholder="Enter message" className="bg-transparent md:px-3 text-sm relative w-full h-full outline-none"
                     value={input}
                     onChange={e => setInput(e.target.value)}
                     onKeyUp={handleKeyDown}
                     disabled={isFetching}
                 />
                 <Button
-                    className="relative p-4 bg-white hover:bg-white w-10 h-10 text-lg disabled:bg-muted"
+                    className="relative p-4 bg-white  hover:bg-white text-lg disabled:bg-muted"
                     onClick={handleClick}
-                    disabled={isFetching}
+                    disabled={isFetching || input.length === 0}
+                    variant="ghost"
                 >
-                    <FaArrowUpLong size={40} className="text-neutral-900" />
+                    <FaArrowUpLong size={10} className="text-black" />
                 </Button>
             </div>
+            <p className="text-xs text-muted-foreground w-full text-center">This is only the testing phase of product doesn{"'"}t represent the final product.</p>
         </div>
     )
 }
