@@ -28,7 +28,7 @@ export const ChatBox = ({ message }: Message) => {
         <div className="w-full scrollbar-hidden">
             <div className="flex gap-2 items-start">
                 <div className="size-10 p-1">
-                    <div className="w-full h-full bg-neutral-700 rounded-full flex items-center justify-center">
+                    <div className="size-9 bg-neutral-700 rounded-full flex items-center justify-center">
                         <CiUser size={20} className="text-muted" />
                     </div>
                 </div>
