@@ -16,10 +16,10 @@ import remarkGfm from 'remark-gfm'
 export const ChatBox = ({ message }: Message) => {
 
     return message.sent_from === 'ai' ? (
-        <div className="w-full py-2 scrollbar-hidden">
+        <div className="w-full py-2 scrollbar-hidden ">
             <div className="flex gap-2 items-start">
                 <Image src={ai_img} alt="ai" width={40} height={40} />
-                <div className=" p-2 rounded-md markdown_comp">
+                <div className=" p-2 rounded-md markdown_comp overflow-auto scrollbar-custom">
                     <Markdown remarkPlugins={[remarkGfm]} >{message.content}</Markdown>
                 </div>
             </div>
