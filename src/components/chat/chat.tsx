@@ -31,7 +31,7 @@ export default function Chat() {
 
     const containerRef = useRef(null)
 
-    const handleSubmit = async (input: string) => {
+    const createAndUpdateChat = async (input: string) => {
         const createNewChatPayload = await fetch('/api/chat/new', {
             method: 'GET'
         }).then(res => res.json()).then(async (data) => {
@@ -41,6 +41,11 @@ export default function Chat() {
             return data
         });
         const chatId = createNewChatPayload.chat_id;
+        return chatId
+    }
+
+    const handleSubmit = async (input: string) => {
+
         //@ts-ignore
         setMessages([...messages, {
             sent_from: 'user',
@@ -49,6 +54,8 @@ export default function Chat() {
             sent_from: 'ai',
             content: 'thinking...'
         }] as IMessage[]);
+
+        const chatId = await createAndUpdateChat(input)
         const res = await fetch(`${process.env.NEXT_PUBLIC_API}/ai_response/${chatId}`, {
             method: 'POST',
             body: JSON.stringify({ input_str: input }),
