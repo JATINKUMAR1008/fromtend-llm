@@ -14,25 +14,34 @@ export default function ChatInput({ onSubmit, suggestions }: IProps) {
     const [input, setInput] = useState("")
     const dispatch = useDispatch()
     const isFetching = useAppSelector(state => state.global.isFetching)
+
     const handleSubmit = () => {
-        dispatch(changeFetchState())
-        console.log(input)
-        onSubmit(input)
+        if (input.trim() !== "") { // Check if input is not empty or contains only spaces
+            dispatch(changeFetchState())
+            // console.log(input)
+            onSubmit(input.trim()) 
+            setInput("") 
+        }
     }
+
     const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
         e.preventDefault();
-        // console.log("why not working");
-        if (e.key === "Enter" && input.length > 0) {
+        if (e.key === "Enter" && input.trim() !== "") { // Check if input is not empty or contains only spaces
             handleSubmit();
         }
     };
+
     const handleClick = () => {
-        handleSubmit();
+        if (input.trim() !== "") { // Check if input is not empty or contains only spaces
+            handleSubmit();
+        }
     }
+
     useEffect(() => {
         console.log("input", isFetching)
         setInput("")
     }, [isFetching])
+
     useEffect(() => {
         setInput(suggestions || "")
     }, [suggestions])
@@ -49,7 +58,7 @@ export default function ChatInput({ onSubmit, suggestions }: IProps) {
                 <Button
                     className="relative p-4 bg-white  hover:bg-white text-lg disabled:bg-muted"
                     onClick={handleClick}
-                    disabled={isFetching || input.length === 0}
+                    disabled={isFetching || input.trim() === ""}
                     variant="ghost"
                 >
                     <FaArrowUpLong size={10} className="text-black" />
