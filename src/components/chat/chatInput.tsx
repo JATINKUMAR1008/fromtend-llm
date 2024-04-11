@@ -59,11 +59,11 @@ export default function ChatInput({ onSubmit, suggestions }: IProps) {
 
     return (
         <div className="absolute bottom-3 lg:px-0 z-10 gap-3 w-full m-auto flex flex-col items-center justify-start ">
-            <div className="w-full max-h-[120px] min-h-[30px] h-full px-3 py-2 gap-2 flex items-center rounded-2xl bg-[#28282E] overflow-auto m-auto justify-center">
+            <div className="w-full max-h-[120px] min-h-[20px] h-full px-3 py-2 gap-2 flex items-center rounded-2xl bg-[#28282E] overflow-auto m-auto justify-center">
                 <textarea
                     ref={inputRef}
                     placeholder="Message GAIA..."
-                    className="bg-transparent md:px-3 text-sm relative w-full h-full outline-none resize-none"
+                    className="bg-transparent md:px-3 py-1 text-sm relative w-full h-full outline-none resize-none"
                     style={{ height: inputHeight }}
                     value={input}
                     onChange={handleChange}
