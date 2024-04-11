@@ -71,12 +71,12 @@ export default function ChatInput({ onSubmit, suggestions }: IProps) {
                     disabled={isFetching}
                 />
                 <Button
-                    className="relative p-4 bg-[#C05037] hover:bg-white text-lg disabled:bg-muted"
+                    className="relative p-2.5 rounded-xl bg-[#C05037] text-lg disabled:bg-[#807D7D]"
                     onClick={handleClick}
                     disabled={isFetching || input.trim() === ""}
                     variant="ghost"
                 >
-                    <FaArrowUpLong size={10} className="text-black" />
+                    <FaArrowUpLong size={20} className="text-white-950 disabled:text-black" />
                 </Button>
             </div>
             <p className="text-xs text-muted-foreground w-full text-center">This is only the testing phase of the product and doesn{"'"}t represent the final product.</p>
