@@ -102,13 +102,13 @@ export default function Chat() {
                     //@ts-ignore
                     <ChatBox key={index} message={message} />
                 )) : (
-                    <div className="w-full h-full flex flex-col items-center justify-between">
-                        <div className="flex flex-col items-center mt-[30%]">
+                    <div className="w-full h-full flex flex-col items-center justify-center md:mt-[30%] mt-[10%]">
+                        <div className="flex flex-col items-center">
                             <Image src={ai_img} alt="ai" width={100} height={100} />
                             <h1 className="mt-1 text-2xl font-sans">Hello, I{"'"}m GAIA</h1>
                             <p className="text-md mt-1 text-neutral-400 text-center">Ask me anything or pick a suggestion to get started</p>
                         </div>
-                        <div className="mb-2">
+                        <div className="md:mb-5 mb-10 ">
                             <SuggestedQuestions onClick={(e) => setQuestion(e)} />
                         </div>
                     </div>

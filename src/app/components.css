@@ -19,6 +19,7 @@
 .markdown_comp table{
     margin: 5px 0px 5px 0px;
     padding: 10px;
+    overflow: auto;
 }
 .markdown_comp table tr td{
     border-color: red;
