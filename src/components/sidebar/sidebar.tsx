@@ -29,9 +29,6 @@ export default function Sidebar() {
     useEffect(() => {
         dispatch(fetchHistory())
     }, [])
-    useEffect(() => {
-        dispatch(setCurrentChat(chatOn))
-    }, [chatOn])
     return (
         <>
 
@@ -50,7 +47,7 @@ export default function Sidebar() {
                     <h1 className="w-full text-left text-xs text-muted mb-5 px-3">History</h1>
                     {
                         chatHistory.length > 0 ? chatHistory.map((item, index) => (
-                            <div key={index} className={item?.chat_id === currentChat ? "w-full p-3 px-4 min-h-11 cursor-pointer bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap" : "w-full p-3 cursor-pointer min-h-11 hover:bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap"} onClick={() => router.push(`/chat/${item.chat_id}`)}>
+                            <div key={index} className={item?.chat_id === currentChat ? "w-full p-3 px-4 min-h-11 cursor-pointer bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap" : "w-full p-3 cursor-pointer min-h-11 hover:bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap"} onClick={() => { router.push(`/chat/${item.chat_id}`); dispatch(setCurrentChat(item.chat_id)) }}>
                                 {item.label}
                             </div>
                         )) : (
@@ -77,7 +74,7 @@ export default function Sidebar() {
                         <h1 className="w-full text-left text-xs text-muted mb-5 px-3">History</h1>
                         {
                             chatHistory.length > 0 ? chatHistory.map((item, index) => (
-                                <div key={index} className={item?.chat_id === currentChat ? "w-full p-3 px-4 min-h-11 rounded-md cursor-pointer bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap" : "w-full p-3 rounded-md cursor-pointer min-h-11 hover:bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap"} onClick={() => { router.push(`/chat/${item.chat_id}`); dispatch(changeSidebarState()) }}>
+                                <div key={index} className={item?.chat_id === currentChat ? "w-full p-3 px-4 min-h-11 rounded-md cursor-pointer bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap" : "w-full p-3 rounded-md cursor-pointer min-h-11 hover:bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap"} onClick={() => { router.push(`/chat/${item.chat_id}`); dispatch(changeSidebarState()); dispatch(setCurrentChat(item.chat_id)) }}>
                                     {item.label}
                                 </div>
                             )) : (
