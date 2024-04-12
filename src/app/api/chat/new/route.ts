@@ -1,8 +1,9 @@
 import { createNewChat } from "@/utils/chats";
 import { NextRequest, NextResponse } from "next/server";
 
-export const GET = async(req:NextRequest)=>{
+export const POST = async (req: NextRequest) => {
     const token = req.cookies.get("token")?.value || "";
-    const chatId  = await createNewChat(token)
+    const body = await req.json();
+    const chatId = await createNewChat(token, body.label || "")
     return NextResponse.json(chatId)
 }

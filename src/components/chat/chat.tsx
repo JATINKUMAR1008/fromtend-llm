@@ -33,10 +33,9 @@ export default function Chat() {
 
     const createAndUpdateChat = async (input: string) => {
         const createNewChatPayload = await fetch('/api/chat/new', {
-            method: 'GET'
+            method: 'POST',
+            body: JSON.stringify({ label: input }),
         }).then(res => res.json()).then(async (data) => {
-            // console.log(data)
-            await updateChatLabel(data.chat_id, input)
             dispatch(fetchHistory())
             return data
         });
