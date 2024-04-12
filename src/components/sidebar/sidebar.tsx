@@ -29,6 +29,9 @@ export default function Sidebar() {
     useEffect(() => {
         dispatch(fetchHistory())
     }, [])
+    useEffect(()=>{
+        dispatch(setCurrentChat(chatOn))
+    },[chatOn])
     return (
         <>
 
