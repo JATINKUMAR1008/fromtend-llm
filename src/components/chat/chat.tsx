@@ -72,6 +72,7 @@ export default function Chat() {
 
             while (!chunk.done) {
                 result += decoder.decode(chunk.value, { stream: true });
+                // console.log(result)
                 //@ts-ignore
                 setMessages([...messages, {
                     sent_from: 'user',
