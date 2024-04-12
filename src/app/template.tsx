@@ -11,7 +11,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
                 <div className="h-full max-w-[250px] md:w-full w-0">
                     <Sidebar />
                 </div>
-                <div className="h-full w-full">
+                <div className="h-full w-full overflow-hidden">
                     {children}
                 </div>
             </main>
