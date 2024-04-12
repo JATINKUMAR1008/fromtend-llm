@@ -8,7 +8,7 @@ import { updateChatLabel } from "@/utils/chats";
 import ChatInput from "./chatInput";
 import { fetchHistory } from "@/app/reducers/slice/global/global.action";
 import { useAppDispatch } from "@/app/reducers/store";
-import { changeFetchState } from "@/app/reducers/slice/global/global.slice";
+import { changeFetchState, setCurrentChat } from "@/app/reducers/slice/global/global.slice";
 import ai_img from "../../../public/ai.png"
 import SuggestedQuestions from "./suggestions";
 interface Message {
@@ -55,6 +55,7 @@ export default function Chat() {
         }] as IMessage[]);
 
         const chatId = await createAndUpdateChat(input)
+        dispatch(setCurrentChat(chatId))
         const res = await fetch(`${process.env.NEXT_PUBLIC_API}/ai_response/${chatId}`, {
             method: 'POST',
             body: JSON.stringify({ input_str: input }),
@@ -85,6 +86,7 @@ export default function Chat() {
         }
         dispatch(changeFetchState())
         router.replace(`/chat/${chatId}`)
+
     };
 
 

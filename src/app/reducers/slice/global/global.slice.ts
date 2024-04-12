@@ -31,8 +31,11 @@ const globalSlice = createSlice({
         },
         setLoading: (state) => {
             state.isLoading = !state.isLoading
+        },
+        setCurrentChat: (state, action) => {
+            state.currentChat = action.payload
         }
     }
 })
-export const { login, setHistory, changeSidebarState, changeFetchState, setMessages, setLoading } = globalSlice.actions
+export const { login, setHistory, changeSidebarState, changeFetchState, setMessages, setLoading, setCurrentChat } = globalSlice.actions
 export default globalSlice.reducer;

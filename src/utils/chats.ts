@@ -13,13 +13,14 @@ export const getHistory = async (token: string) => {
     )
     return res
 }
-export const createNewChat = async (token: string, label: string) => {
+export const createNewChat = async (token: string, input: string) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API}/create_new_chat`, {
         method: 'POST',
         headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ label })
+        body: JSON.stringify({ label: input })
     }).then(
         res => res.json()
     ).then(
