@@ -92,6 +92,7 @@ export default function Chat() {
 
 
     useEffect(() => {
+        dispatch(fetchHistory())
         if (containerRef.current) {
             (containerRef.current as HTMLDivElement).scrollTop = (containerRef.current as HTMLDivElement).scrollHeight;
         }
