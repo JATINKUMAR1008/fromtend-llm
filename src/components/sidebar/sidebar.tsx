@@ -28,7 +28,7 @@ export default function Sidebar() {
     const pathname = usePathname()
     const chatOn = pathname.split("/")[2]
     const redirectPage = () => {
-        router.push("/auth/login");
+        window.location.reload()
         dispatch(changeSidebarState())
     }
     useEffect(() => {
