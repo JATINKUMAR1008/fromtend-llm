@@ -29,3 +29,13 @@ export const fetchMessages = (chatId: string) => async (dispatch: AppDispatch) =
     }
     dispatch(setLoading())
 }
+export const logOut = () => async (dispatch: AppDispatch) => {
+    try {
+        const res = await fetch('/api/auth/logout', {
+            method: 'GET'
+        }).then(res => res.json()).then(data => { return data })
+        console.log(res)
+    } catch (e) {
+        console.error(e)
+    }
+}

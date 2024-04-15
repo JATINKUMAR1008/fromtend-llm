@@ -7,7 +7,8 @@ import { RiLoader2Line } from "react-icons/ri";
 import { PiPencilSimpleLineThin } from "react-icons/pi";
 import { useAppDispatch, useAppSelector } from "@/app/reducers/store";
 import { changeSidebarState, setCurrentChat } from "@/app/reducers/slice/global/global.slice";
-import { fetchHistory } from "@/app/reducers/slice/global/global.action";
+import { fetchHistory, logOut } from "@/app/reducers/slice/global/global.action";
+import { IoIosLogOut } from "react-icons/io";
 interface Iprops {
     chatId?: string
     chatHistory?: IChat[]
@@ -26,12 +27,16 @@ export default function Sidebar() {
     const { sidebarOpen } = useAppSelector(state => state.global)
     const pathname = usePathname()
     const chatOn = pathname.split("/")[2]
+    const redirectPage = () => {
+        router.push("/auth/login");
+        dispatch(changeSidebarState())
+    }
     useEffect(() => {
         dispatch(fetchHistory())
     }, [])
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(setCurrentChat(chatOn))
-    },[chatOn])
+    }, [chatOn])
     return (
         <>
 
@@ -46,7 +51,7 @@ export default function Sidebar() {
                     </Button>
                 </div>
 
-                {chatHistory && <div className="mt-5 flex flex-col items-center text-muted max-h-[90%] h-full overflow-auto scrollbar-custom gap-1">
+                {chatHistory && <div className="mt-5 flex flex-col items-center text-muted max-h-[calc(90%-50px)] h-full overflow-auto scrollbar-custom gap-1">
                     <h1 className="w-full text-left text-xs text-muted mb-5 px-3">History</h1>
                     {
                         chatHistory.length > 0 ? chatHistory.map((item, index) => (
@@ -61,6 +66,12 @@ export default function Sidebar() {
                         )
                     }
                 </div>}
+                <div className="h-[50px] w-full px-2">
+                    <Button variant="default" className="w-full sticky bg-[#313035] hover:bg-[#3d3c40]" onClick={() => { dispatch(logOut()); redirectPage() }}>
+                        <IoIosLogOut size={20} className="mr-2" />
+                        Log Out
+                    </Button>
+                </div>
             </div>
             <div className={sidebarOpen ? "flex relative lg:hidden left-0 min-w-[250px] items-center gap-2   z-20 h-screen duration-200 ease-in-out" : "flex lg:hidden relative left-[-310px] w-0 items-center gap-2  z-20 h-screen duration-200 ease-in-out"}>
                 <div className="px-4 py-2 flex-col bg-[#1B1B20] w-full h-screen ">
@@ -73,7 +84,7 @@ export default function Sidebar() {
                             Create new chat
                         </Button>
                     </div>
-                    {chatHistory && <div className="mt-5 flex flex-col items-center text-muted max-h-[90%] h-full overflow-auto scrollbar-custom gap-1">
+                    {chatHistory && <div className="mt-5 flex flex-col items-center text-muted max-h-[calc(85%-50px)] h-full overflow-auto scrollbar-custom gap-1">
                         <h1 className="w-full text-left text-xs text-muted mb-5 px-3">History</h1>
                         {
                             chatHistory.length > 0 ? chatHistory.map((item, index) => (
@@ -88,6 +99,12 @@ export default function Sidebar() {
                             )
                         }
                     </div>}
+                    <div className="h-[50px] w-full px-2">
+                        <Button variant="default" className="w-full sticky bg-[#313035] hover:bg-[#3d3c40]" onClick={() => { dispatch(logOut()); redirectPage() }}>
+                            <IoIosLogOut size={20} className="mr-2" />
+                            Log Out
+                        </Button>
+                    </div>
                 </div>
                 <Button variant="outline" className="text-muted-foreground size-10 p-0" onClick={() => {
                     dispatch(changeSidebarState())
