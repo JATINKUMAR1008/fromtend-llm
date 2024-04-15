@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "@/app/reducers/store";
 import { changeSidebarState, setCurrentChat } from "@/app/reducers/slice/global/global.slice";
 import { fetchHistory, logOut, removeChat } from "@/app/reducers/slice/global/global.action";
 import { IoIosLogOut } from "react-icons/io";
+import { toast } from "../ui/use-toast";
 interface Iprops {
     chatId?: string
     chatHistory?: IChat[]
@@ -31,8 +32,13 @@ export default function Sidebar() {
 
     const handleDeleteChat = (chatId: string) => {
         dispatch(removeChat(chatId));
-        dispatch(fetchHistory())
         router.push("/")
+        toast({
+            title: "Delete",
+            description: "Chat deleted successfully."
+        })
+        dispatch(fetchHistory())
+
     };
 
     const redirectPage = async () => {
