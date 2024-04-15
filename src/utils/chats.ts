@@ -43,9 +43,9 @@ export const updateChatLabel = async (chatId: string, input: string) => {
     return res
 }
 
-export const deleteChat = async (chatId: string,token: string) => {
+export const deleteChat = async (chatId: string, token: string) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API}/delete_chat/${chatId}`, {
-        method: 'GET',
+        method: 'DELETE',
         headers: {
             'Authorization': `Bearer ${token}`
         }
@@ -53,7 +53,7 @@ export const deleteChat = async (chatId: string,token: string) => {
         res => res.json()
     ).then(
         data => {
-            return data
+            return data 
         }
     )
     console.log("deleted successfully 2")
