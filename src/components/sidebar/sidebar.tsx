@@ -30,6 +30,7 @@ export default function Sidebar() {
     const redirectPage = () => {
         dispatch(logOut());
         window.location.reload()
+        router.push("/auth/login")
         dispatch(changeSidebarState())
     }
     useEffect(() => {
