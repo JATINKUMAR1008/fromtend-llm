@@ -1,7 +1,7 @@
 import { IMessage } from "@/app/types/global.types"
 import { AppDispatch } from "../../store"
 import { fetchChat } from "@/utils/auth"
-import { setHistory, setLoading, setMessages } from "./global.slice"
+import { setHistory, setLoading, setMessages,deleteChatFailure,deleteChatSuccess } from "./global.slice"
 interface IFetchHistoryPayload {
     chatId: string,
     token: string
@@ -39,3 +39,17 @@ export const logOut = () => async (dispatch: AppDispatch) => {
         console.error(e)
     }
 }
+
+export const removeChat = (chatId: string) => async (dispatch: AppDispatch) => {
+    try {
+        dispatch(setLoading());
+        await fetch(`/api/delete_chat/${chatId}`, {
+            method: 'DELETE'
+        });
+        dispatch(deleteChatSuccess({ chat_id: chatId }));
+        console.log("successfull deleted")
+    } catch (error) {
+        console.error(error);
+        dispatch(deleteChatFailure());
+    }
+};

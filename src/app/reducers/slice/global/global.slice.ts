@@ -34,8 +34,14 @@ const globalSlice = createSlice({
         },
         setCurrentChat: (state, action) => {
             state.currentChat = action.payload
-        }
+        },
+        deleteChatSuccess: (state, action) => {
+            state.chatHistory = state.chatHistory.filter(chat => chat.chat_id !== action.payload.chat_id);
+        },
+        deleteChatFailure: (state) => {
+            // Handle delete chat failure if needed
+        },
     }
 })
-export const { login, setHistory, changeSidebarState, changeFetchState, setMessages, setLoading, setCurrentChat } = globalSlice.actions
+export const { login, setHistory, changeSidebarState, changeFetchState, setMessages, setLoading, setCurrentChat,deleteChatFailure,deleteChatSuccess } = globalSlice.actions
 export default globalSlice.reducer;
