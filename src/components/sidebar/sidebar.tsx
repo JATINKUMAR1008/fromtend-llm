@@ -37,7 +37,9 @@ export default function Sidebar() {
     const redirectPage = () => {
         dispatch(logOut());
         window.location.reload()
-        router.push("/auth/login")
+        setTimeout(() => {
+            router.push("/auth/login")
+        }, 100)
         dispatch(changeSidebarState())
     }
     useEffect(() => {
