@@ -97,7 +97,7 @@ export default function ChatPage({ params }: IPageProps) {
     }, [fetchedMessages])
 
     useEffect(() => {
-        dispatch(fetchHistory())
+        // dispatch(fetchHistory())
         if (containerRef.current) {
             (containerRef.current as HTMLDivElement).scrollTop = (containerRef.current as HTMLDivElement).scrollHeight;
         }

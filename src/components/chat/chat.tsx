@@ -63,6 +63,7 @@ export default function Chat() {
                 'Content-Type': 'application/json'
             }
         });
+        dispatch(fetchHistory())
         const reader = res.body ? res.body.getReader() : null;
         const decoder = new TextDecoder();
         if (reader) {
@@ -92,7 +93,7 @@ export default function Chat() {
 
 
     useEffect(() => {
-        dispatch(fetchHistory())
+        // dispatch(fetchHistory())
         if (containerRef.current) {
             (containerRef.current as HTMLDivElement).scrollTop = (containerRef.current as HTMLDivElement).scrollHeight;
         }
