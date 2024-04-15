@@ -43,11 +43,11 @@ export const logOut = () => async (dispatch: AppDispatch) => {
 export const removeChat = (chatId: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(setLoading());
-        await fetch(`/api/delete_chat/${chatId}`, {
-            method: 'DELETE'
+        await fetch(`/api/delete/${chatId}`, {
+            method: 'GET'
         });
         dispatch(deleteChatSuccess({ chat_id: chatId }));
-        console.log("successfull deleted")
+        console.log("successfully deleted")
     } catch (error) {
         console.error(error);
         dispatch(deleteChatFailure());

@@ -42,3 +42,20 @@ export const updateChatLabel = async (chatId: string, input: string) => {
     }).then(res => res.json()).then(data => { return data })
     return res
 }
+
+export const deleteChat = async (chatId: string,token: string) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API}/delete_chat/${chatId}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }).then(
+        res => res.json()
+    ).then(
+        data => {
+            return data
+        }
+    )
+    console.log("deleted successfully 2")
+    return res
+}

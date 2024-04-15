@@ -64,7 +64,7 @@ export default function Sidebar() {
                     <h1 className="w-full text-left text-xs text-muted mb-5 px-3">History</h1>
                     {
                         chatHistory.length > 0 ? chatHistory.map((item, index) => (
-                            <div className={item?.chat_id === currentChat ? "flex item-center justify-center w-full p-3 px-4 min-h-11 cursor-pointer bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap" : "flex item-center justify-center w-full p-3 cursor-pointer min-h-11 hover:bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap"}>
+                            <div key={index} className={item?.chat_id === currentChat ? "flex item-center justify-center w-full p-3 px-4 min-h-11 cursor-pointer bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap" : "flex item-center justify-center w-full p-3 cursor-pointer min-h-11 hover:bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap"}>
                                 <p key={index} className={item?.chat_id === currentChat ? "w-full cursor-pointer bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap" : "w-full cursor-pointer hover:bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap"} onClick={() => { router.push(`/chat/${item.chat_id}`); dispatch(setCurrentChat(item.chat_id)) }}>
                                     {item.label}
                                 </p>
