@@ -62,7 +62,7 @@ export default function ChatPage({ params }: IPageProps) {
                 'Content-Type': 'application/json'
             }
         });
-        dispatch(fetchHistory())
+
         const reader = res.body ? res.body.getReader() : null;
         const decoder = new TextDecoder();
         if (reader) {
@@ -86,6 +86,7 @@ export default function ChatPage({ params }: IPageProps) {
 
             }
         }
+        dispatch(fetchHistory())
         dispatch(changeFetchState())
     };
 
