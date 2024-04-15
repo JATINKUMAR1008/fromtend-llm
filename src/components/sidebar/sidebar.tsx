@@ -29,7 +29,7 @@ export default function Sidebar() {
     const chatOn = pathname.split("/")[2]
 
 
-    const handleDeleteChat = (chatId) => {
+    const handleDeleteChat = (chatId:string) => {
         dispatch(removeChat(chatId));
         router.push("/")
     };
