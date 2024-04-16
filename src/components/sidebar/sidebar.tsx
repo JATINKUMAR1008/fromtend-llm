@@ -97,7 +97,7 @@ export default function Sidebar() {
                         )
                     }
                 </div>}
-                <div className="h-[50px] w-full px-2">
+                <div className="h-[50px] w-full px-3 py-2">
                     <Button variant="default" className="w-full sticky bg-[#313035] hover:bg-[#3d3c40]" onClick={() => { redirectPage() }}>
                         <IoIosLogOut size={20} className="mr-2" />
                         Log Out
@@ -147,7 +147,7 @@ export default function Sidebar() {
                             )
                         }
                     </div>}
-                    <div className="h-[50px] w-full px-2">
+                    <div className="h-[50px] w-full px-2 py-2">
                         <Button variant="default" className="w-full sticky bg-[#313035] hover:bg-[#3d3c40]" onClick={() => { redirectPage() }}>
                             <IoIosLogOut size={20} className="mr-2" />
                             Log Out
