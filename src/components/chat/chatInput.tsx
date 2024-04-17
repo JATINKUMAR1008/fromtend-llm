@@ -80,6 +80,7 @@ export default function ChatInput({ onSubmit, suggestions }: IProps) {
                 </Button>
             </div>
             <p className="text-xs text-muted-foreground w-full text-center">This is only the testing phase of the product and doesn{"'"}t represent the final product.</p>
+            <p className="text-xs text-muted-foreground w-full text-center">Please frame your Questions/Prompt properly to accept relevant responses.</p>
         </div>
     );
 }
