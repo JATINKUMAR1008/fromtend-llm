@@ -58,7 +58,7 @@ export default function ChatInput({ onSubmit, suggestions }: IProps) {
     }, [input]);
 
     return (
-        <div className="absolute bottom-3 lg:px-0 z-10 gap-3 w-full m-auto flex flex-col items-center justify-start ">
+        <div className="absolute bottom-3 lg:px-0 z-10 gap-3 xl:w-[60%] md:w-[90%] w-[100%] m-auto flex flex-col items-center justify-start ">
             <div className="w-full max-h-[120px] min-h-[20px] h-full px-3 py-2 gap-2 flex items-center rounded-2xl bg-[#28282E] overflow-auto m-auto justify-center scrollbar-custom">
                 <textarea
                     ref={inputRef}

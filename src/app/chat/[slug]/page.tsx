@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from "@/app/reducers/store"
 import { fetchHistory, fetchMessages } from "@/app/reducers/slice/global/global.action"
 import { changeFetchState } from "@/app/reducers/slice/global/global.slice"
 import Loading from "@/app/loading"
+import '../../components.css'
 interface IPageProps {
     params: {
         slug: string
@@ -105,10 +106,10 @@ export default function ChatPage({ params }: IPageProps) {
     }, [messages]);
 
     return (
-        <div className="xl:w-[60%] md:w-[70%] w-[90%] m-auto h-screen relative flex justify-center scrollbar-hidden">
+        <div className="xl:w-[100%] md:w-[70%] w-[90%] m-auto h-screen relative flex justify-center scrollbar-hidden">
             {
                 !isLoading ?
-                    (<div className="h-[calc(100%-3.5rem-110px)] mt-14 pt-5 pb-2 flex flex-col items-start w-full gap-1 overflow-y-auto overflow-x-hidden scrollbar-hidden" ref={containerRef}>
+                    (<div className="chats h-[calc(100%-3.5rem-110px)] mt-14 pt-5 pb-2 flex flex-col items-start w-full gap-1 overflow-y-auto overflow-x-hidden xl:px-[250px] sm:px-3" ref={containerRef}>
                         {
                             messages.length > 0 ?
                                 messages?.map((message, index) => (
