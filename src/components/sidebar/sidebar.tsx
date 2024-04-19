@@ -10,6 +10,7 @@ import { changeSidebarState, setCurrentChat } from "@/app/reducers/slice/global/
 import { fetchHistory, logOut, removeChat } from "@/app/reducers/slice/global/global.action";
 import { IoIosLogOut } from "react-icons/io";
 import { toast } from "../ui/use-toast";
+import { Label } from "@radix-ui/react-label";
 interface Iprops {
     chatId?: string
     chatHistory?: IChat[]
@@ -49,8 +50,11 @@ export default function Sidebar() {
         dispatch(fetchHistory())
     }, [])
     useEffect(() => {
-        dispatch(setCurrentChat(chatOn))
-    }, [chatOn])
+        if (chatHistory.length > 0) {
+            const label = chatHistory.find(chat => chat.chat_id === chatOn)?.label
+            dispatch(setCurrentChat({ id: chatOn, label: label }))
+        }
+    }, [chatOn, chatHistory])
     return (
         <>
 
@@ -69,8 +73,8 @@ export default function Sidebar() {
                     <h1 className="w-full text-left text-xs text-muted mb-5 px-3">History</h1>
                     {
                         chatHistory.length > 0 ? chatHistory.map((item, index) => (
-                            <div key={index} className={item?.chat_id === currentChat ? "flex item-center justify-center w-full p-3 px-4 min-h-11 cursor-pointer bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap" : "flex item-center justify-center w-full p-3 cursor-pointer min-h-11 hover:bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap"}>
-                                <p key={index} className={item?.chat_id === currentChat ? "w-full cursor-pointer bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap" : "w-full cursor-pointer hover:bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap"} onClick={() => { router.push(`/chat/${item.chat_id}`); dispatch(setCurrentChat(item.chat_id)) }}>
+                            <div key={index} className={item?.chat_id === currentChat.id ? "flex item-center justify-center w-full p-3 px-4 min-h-11 cursor-pointer bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap" : "flex item-center justify-center w-full p-3 cursor-pointer min-h-11 hover:bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap"}>
+                                <p key={index} className={item?.chat_id === currentChat.id ? "w-full cursor-pointer bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap" : "w-full cursor-pointer hover:bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap"} onClick={() => { router.push(`/chat/${item.chat_id}`); dispatch(setCurrentChat({ id: item.chat_id, label: item.label })) }}>
                                     {item.label}
                                 </p>
                                 <svg
@@ -119,8 +123,8 @@ export default function Sidebar() {
                         <h1 className="w-full text-left text-xs text-muted mb-5 px-3">History</h1>
                         {
                             chatHistory.length > 0 ? chatHistory.map((item, index) => (
-                                <div key={index} className={item?.chat_id === currentChat ? "w-full p-3 px-4 min-h-11 rounded-md cursor-pointer bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap flex gap-1" : "w-full flex gap-1 p-3 rounded-md cursor-pointer min-h-11 hover:bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap"} onClick={() => { router.push(`/chat/${item.chat_id}`); dispatch(changeSidebarState()); dispatch(setCurrentChat(item.chat_id)) }}>
-                                    <p key={index} className={item?.chat_id === currentChat ? "w-full cursor-pointer bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap" : "w-full cursor-pointer hover:bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap"} onClick={() => { router.push(`/chat/${item.chat_id}`); dispatch(setCurrentChat(item.chat_id)) }}>
+                                <div key={index} className={item?.chat_id === currentChat.id ? "w-full p-3 px-4 min-h-11 rounded-md cursor-pointer bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap flex gap-1" : "w-full flex gap-1 p-3 rounded-md cursor-pointer min-h-11 hover:bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap"} onClick={() => { router.push(`/chat/${item.chat_id}`); dispatch(changeSidebarState()); dispatch(setCurrentChat({ id: item.chat_id, label: item.label })) }}>
+                                    <p key={index} className={item?.chat_id === currentChat.id ? "w-full cursor-pointer bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap" : "w-full cursor-pointer hover:bg-[#313035] text-sm  overflow-hidden text-ellipsis whitespace-nowrap"} onClick={() => { router.push(`/chat/${item.chat_id}`); dispatch(setCurrentChat({ id: item.chat_id, label: item.label })) }}>
                                         {item.label}
                                     </p>
                                     <svg

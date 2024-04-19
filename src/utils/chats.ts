@@ -59,3 +59,36 @@ export const deleteChat = async (chatId: string, token: string) => {
     console.log("deleted successfully 2")
     return res
 }
+
+export const shareChat = async (chatId: string,token: string) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API}/share/${chatId}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }).then(
+        res => res.json()
+    ).then(
+        data => {
+            return data
+        }
+    )
+    return res
+}
+
+export const resetChat = async (chatId: string, token: string) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API}/reset_chat/${chatId}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }).then(
+        res => res.json()
+    ).then(
+        data => {
+            return data 
+        }
+    )
+    console.log("chat reset successfully 2")
+    return res
+}
