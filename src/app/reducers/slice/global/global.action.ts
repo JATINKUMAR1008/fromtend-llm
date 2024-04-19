@@ -53,3 +53,15 @@ export const removeChat = (chatId: string) => async (dispatch: AppDispatch) => {
         dispatch(deleteChatFailure());
     }
 };
+
+export const shareChat = (chatId:string) =>
+    async (dispatch: AppDispatch) => {
+        try {
+            const data = await fetch(`/api/chat/share?chatId=${chatId}`, {
+                method: 'GET'
+            }).then(res => res.json()).then(data => { return data })
+            dispatch(setHistory(data))
+        } catch (e) {
+            console.error(e)
+        }
+    }

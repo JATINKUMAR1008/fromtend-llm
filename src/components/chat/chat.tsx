@@ -114,7 +114,7 @@ export default function Chat() {
                         </div>
                         <div className="md:mb-5 mb-10 ">
                             <SuggestedQuestions onClick={(e) => setQuestion(e)} />
-                        </div>
+                        </div> 
                     </div>
                 )}
             </div>
