@@ -42,13 +42,13 @@ export default function ShareDialog({ children }: IPageProps) {
                 </DialogHeader>
                 <div className="md:w-full w-[250px] md:h-[450px] h-[300px] py-1 border rounded-xl bg-[#202026]">
                     <div className="md:w-full w-[248px] md:h-[350px] h-[200px] overflow-auto chats px-3 py-2 bg-[#1B1B20] rounded-md">
-                        {isLoading ? (
+                        {messages.length == 0 ? (
                             <div className="flex justify-center items-center h-full">
                                 <RiLoader2Line className="animate-spin text-2xl" />
                             </div>
                         ) : (
                             <>
-                                {messages.map((message, index) => (
+                                {messages?.map((message, index) => (
                                     <ChatBox key={index} message={message} last_user_message={""} handleInputChange={function (): void {
                                         throw new Error("Function not implemented.")
                                     }} setMessagesState={function (messages: any): void {

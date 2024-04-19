@@ -14,6 +14,9 @@ import { fetchHistory, fetchMessages } from "@/app/reducers/slice/global/global.
 import { changeFetchState } from "@/app/reducers/slice/global/global.slice"
 import Loading from "@/app/loading"
 import '../../components.css'
+import Image from "next/image"
+import ai_img from "../../../../public/ai.png"
+import SuggestedQuestions from "@/components/chat/suggestions"
 interface IPageProps {
     params: {
         slug: string
@@ -44,7 +47,7 @@ export default function ChatPage({ params }: IPageProps) {
     const dispatch = useAppDispatch()
     const { messages: fetchedMessages, isLoading } = useAppSelector(state => state.global)
     const [messages, setMessages] = useState<IMessage[]>([])
-
+    const [question, setQuestion] = useState<string>('')
     const containerRef = useRef(null)
     const handleSubmit = async (input: string) => {
         //@ts-ignore
@@ -117,8 +120,15 @@ export default function ChatPage({ params }: IPageProps) {
                                     <ChatBox key={index} message={message} />
                                 )) :
                                 (
-                                    <div className="w-full h-full items-center justify-center flex">
-                                        <RiLoader2Line size={50} className="animate-spin text-neutral-300" />
+                                    <div className="w-full h-full flex flex-col items-center justify-center md:mt-[20%]">
+                                        <div className="flex flex-col items-center">
+                                            <Image src={ai_img} alt="ai" width={100} height={100} />
+                                            <h1 className="mt-1 text-2xl font-sans">Hello, I{"'"}m GAIA</h1>
+                                            <p className="text-md mt-1 text-neutral-400 text-center">Ask me anything or pick a suggestion to get started</p>
+                                        </div>
+                                        <div className="md:mb-5 mb-10 ">
+                                            <SuggestedQuestions onClick={(e) => setQuestion(e)} />
+                                        </div>
                                     </div>
                                 )
                         }
@@ -127,7 +137,7 @@ export default function ChatPage({ params }: IPageProps) {
                         <RiLoader2Line size={50} className="animate-spin text-neutral-300" />
                     </div>)
             }
-            <ChatInput onSubmit={(e) => handleSubmit(e)} />
+            <ChatInput onSubmit={(e) => handleSubmit(e)} suggestions={question} />
         </div>
     )
 }

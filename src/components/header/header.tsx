@@ -19,12 +19,13 @@ export default function Header() {
     const router = useRouter()
     const dispatch = useAppDispatch()
     const currentChat = useAppSelector(state => state.global.currentChat)
+    const { messages } = useAppSelector(state => state.global)
     return (
         <div className="w-full sticky z-10 h-14 flex py-4 items-center justify-between px-10 border-b-[1px] border-neutral-700 bg-[#202026]">
             <div className="flex items-center cursor-pointer md:hidden" onClick={() => dispatch(changeSidebarState())}><RiMenu2Fill size={20} /></div>
             <h1 className="text-lg font-semibold font-sans">GAIA<span className="italic font-sans">(testing)</span></h1>
             {currentChat && currentChat.id?.length > 0 && <div className="flex gap-2  ">
-                <ShareDialog>
+                {messages.length>0 && <ShareDialog>
                     <div>
                         <svg className="cursor-pointer" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect x="0.5" y="0.5" width="39" height="39" rx="19.5" stroke="#373740" />
@@ -32,7 +33,7 @@ export default function Header() {
                             <path d="M17.0385 16.7159L19.2717 14.4827V22.747C19.2717 22.9399 19.3484 23.1249 19.4848 23.2613C19.6211 23.3977 19.8061 23.4743 19.999 23.4743C20.1919 23.4743 20.3769 23.3977 20.5133 23.2613C20.6496 23.1249 20.7263 22.9399 20.7263 22.747V14.4827L22.9595 16.7159C23.0966 16.8484 23.2803 16.9217 23.471 16.92C23.6617 16.9184 23.8441 16.8419 23.979 16.7071C24.1138 16.5722 24.1903 16.3898 24.1919 16.1991C24.1936 16.0084 24.1203 15.8247 23.9878 15.6876L20.5132 12.2129C20.3768 12.0766 20.1918 12 19.999 12C19.8062 12 19.6212 12.0766 19.4848 12.2129L16.0102 15.6876C15.8777 15.8247 15.8044 16.0084 15.8061 16.1991C15.8077 16.3898 15.8842 16.5722 16.0191 16.7071C16.1539 16.8419 16.3363 16.9184 16.527 16.92C16.7177 16.9217 16.9014 16.8484 17.0385 16.7159Z" fill="#CCC9C8" />
                         </svg>
                     </div>
-                </ShareDialog>
+                </ShareDialog>}
                 <div onClick={() => dispatch(resetChat(currentChat.id))}>
                     <svg className=" cursor-pointer" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="0.5" y="0.5" width="39" height="39" rx="19.5" stroke="#373740" />

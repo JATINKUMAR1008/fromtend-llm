@@ -89,12 +89,20 @@ export const createShareLink = (chatId: string) => async (dispatch: AppDispatch)
 
 export const resetChat = (chatId: string) => async (dispatch: AppDispatch) => {
     try {
+        dispatch(setLoading());
         const response = await fetch(`/api/chat/reset?chatId=${chatId}`, {
             method: 'DELETE',
         }).then(() => {
-            dispatch(fetchHistory())
+            toast({
+                title: 'Chat: Reset',
+                description: 'Messages are reset for the particular chat.',
+                type: "background"
+            })
         })
+        dispatch(setLoading());
+        dispatch(fetchMessages(chatId));
     } catch (e) {
         console.error(e);
+        dispatch(setLoading());
     }
 }
