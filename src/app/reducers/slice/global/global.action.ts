@@ -1,7 +1,7 @@
 import { IMessage } from "@/app/types/global.types"
 import { AppDispatch } from "../../store"
 import { fetchChat } from "@/utils/auth"
-import { setHistory, setLoading, setMessages, deleteChatFailure, deleteChatSuccess } from "./global.slice"
+import { setHistory, setLoading, setMessages, deleteChatFailure, deleteChatSuccess, setShareLink } from "./global.slice"
 interface IFetchHistoryPayload {
     chatId: string,
     token: string
@@ -54,7 +54,7 @@ export const removeChat = (chatId: string) => async (dispatch: AppDispatch) => {
     }
 };
 
-export const shareChat = (chatId:string) =>
+export const shareChat = (chatId: string) =>
     async (dispatch: AppDispatch) => {
         try {
             const data = await fetch(`/api/chat/share?chatId=${chatId}`, {
@@ -65,3 +65,28 @@ export const shareChat = (chatId:string) =>
             console.error(e)
         }
     }
+
+export const createShareLink = (chatId: string) => async (dispatch: AppDispatch) => {
+    try {
+        const data = await fetch(`/api/chat/share?chatId=${chatId}`, {
+            method: 'GET'
+        }).then(res => res.json());
+        // navigator.clipboard.writeText(data.link);
+        dispatch(setShareLink(data.link));
+        return data;
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+export const resetChat = (chatId: string) => async (dispatch: AppDispatch) => {
+    try {
+        const response = await fetch(`/api/chat/reset?chatId=${chatId}`, {
+            method: 'DELETE',
+        }).then(() => {
+            dispatch(fetchHistory())
+        })
+    } catch (e) {
+        console.error(e);
+    }
+}

@@ -8,7 +8,8 @@ const initialState = {
     sidebarOpen: false,
     isFetching: false,
     messages: [] as IMessage[],
-    isLoading: false
+    isLoading: false,
+    shareLink: "" as string
 }
 const globalSlice = createSlice({
     name: "global",
@@ -41,7 +42,10 @@ const globalSlice = createSlice({
         deleteChatFailure: (state) => {
             // Handle delete chat failure if needed
         },
+        setShareLink: (state, action) => {
+            state.shareLink = action.payload
+        }
     }
 })
-export const { login, setHistory, changeSidebarState, changeFetchState, setMessages, setLoading, setCurrentChat,deleteChatFailure,deleteChatSuccess } = globalSlice.actions
+export const { login, setHistory, changeSidebarState, changeFetchState, setMessages, setLoading, setCurrentChat,deleteChatFailure,deleteChatSuccess,setShareLink } = globalSlice.actions
 export default globalSlice.reducer;
