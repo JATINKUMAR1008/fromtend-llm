@@ -1,7 +1,8 @@
 import { IMessage } from "@/app/types/global.types"
 import { AppDispatch } from "../../store"
 import { fetchChat } from "@/utils/auth"
-import { setHistory, setLoading, setMessages, deleteChatFailure, deleteChatSuccess, setShareLink } from "./global.slice"
+import { setHistory, setLoading, setMessages, deleteChatFailure, deleteChatSuccess, setShareLink, setButtonLoader } from "./global.slice"
+import { toast } from "@/components/ui/use-toast"
 interface IFetchHistoryPayload {
     chatId: string,
     token: string
@@ -68,14 +69,21 @@ export const shareChat = (chatId: string) =>
 
 export const createShareLink = (chatId: string) => async (dispatch: AppDispatch) => {
     try {
+        dispatch(setButtonLoader(true))
         const data = await fetch(`/api/chat/share?chatId=${chatId}`, {
             method: 'GET'
         }).then(res => res.json());
         // navigator.clipboard.writeText(data.link);
+        toast({
+            title: 'Link Copied',
+            description: 'Share this link with your friends',
+        })
         dispatch(setShareLink(data.link));
+        dispatch(setButtonLoader(false))
         return data;
     } catch (e) {
         console.error(e);
+        dispatch(setButtonLoader(false))
     }
 }
 
