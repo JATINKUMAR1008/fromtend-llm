@@ -2,7 +2,6 @@
 import { RiMenu2Fill } from "react-icons/ri";
 import { IoCreateOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
-import { useAppDispatch } from "@/app/reducers/store";
 import { useDispatch } from "react-redux";
 import { changeSidebarState } from "@/app/reducers/slice/global/global.slice";
 import { useAppDispatch, useAppSelector } from "@/app/reducers/store";
@@ -18,13 +17,15 @@ interface HeaderProps {
 
 export default function Header() {
     const router = useRouter()
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
+    const currentChat = useAppSelector(state => state.global.currentChat)
+    const { messages } = useAppSelector(state => state.global)
     return (
         <div className="w-full sticky z-10 h-14 flex py-4 items-center justify-between px-10 border-b-[1px] border-neutral-700 bg-[#202026]">
             <div className="flex items-center cursor-pointer md:hidden" onClick={() => dispatch(changeSidebarState())}><RiMenu2Fill size={20} /></div>
             <h1 className="text-lg font-semibold font-sans">GAIA<span className="italic font-sans">(testing)</span></h1>
             {currentChat && currentChat.id?.length > 0 && <div className="flex gap-2  ">
-                {messages.length>0 && <ShareDialog>
+                {messages.length > 0 && <ShareDialog>
                     <div>
                         <svg className="cursor-pointer" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect x="0.5" y="0.5" width="39" height="39" rx="19.5" stroke="#373740" />
