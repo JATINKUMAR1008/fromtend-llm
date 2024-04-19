@@ -2,6 +2,7 @@
 import { RiMenu2Fill } from "react-icons/ri";
 import { IoCreateOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/app/reducers/store";
 import { useDispatch } from "react-redux";
 import { changeSidebarState } from "@/app/reducers/slice/global/global.slice";
 import { useAppDispatch, useAppSelector } from "@/app/reducers/store";
@@ -17,9 +18,7 @@ interface HeaderProps {
 
 export default function Header() {
     const router = useRouter()
-    const dispatch = useAppDispatch()
-    const currentChat = useAppSelector(state => state.global.currentChat)
-    const { messages } = useAppSelector(state => state.global)
+    const dispatch = useDispatch()
     return (
         <div className="w-full sticky z-10 h-14 flex py-4 items-center justify-between px-10 border-b-[1px] border-neutral-700 bg-[#202026]">
             <div className="flex items-center cursor-pointer md:hidden" onClick={() => dispatch(changeSidebarState())}><RiMenu2Fill size={20} /></div>
