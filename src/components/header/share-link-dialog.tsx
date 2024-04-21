@@ -33,15 +33,15 @@ export default function ShareDialog({ children }: IPageProps) {
             <DialogTrigger asChild>
                 {children}
             </DialogTrigger>
-            <DialogContent className="md:max-w-fit max-w-[300px]  bg-[#1B1B20] outline-none border-[#29292e]">
+            <DialogContent className="md:max-w-[500px] max-w-[300px]  bg-[#1B1B20] outline-none border-[#29292e]">
                 <DialogHeader>
                     <DialogTitle>Share link to Chat</DialogTitle>
                     <DialogDescription>
                         Messages you send after creating your link won{"'"}t be shared. Anyone with the URL will be able to view the shared chat.
                     </DialogDescription>
                 </DialogHeader>
-                <div className="md:w-full w-[250px] md:h-[450px] h-[300px] py-1 border rounded-xl bg-[#202026]">
-                    <div className="md:w-full w-[248px] md:h-[350px] h-[200px] overflow-auto chats px-3 py-2 bg-[#1B1B20] rounded-md">
+                <div className="md:max-w-[450px] m-auto md:w-full w-[250px] md:h-[450px] h-[300px] py-1 border rounded-xl bg-[#202026]">
+                    <div className="md:max-w-[450px] md:w-full w-[248px] md:h-[350px] h-[200px] overflow-auto chats px-3 py-2 bg-[#1B1B20] rounded-md">
                         {messages.length == 0 ? (
                             <div className="flex justify-center items-center h-full">
                                 <RiLoader2Line className="animate-spin text-2xl" />
