@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} bg-[#202026] text-primary-foreground overflow-y-hidden`}>
         {children}
-        <Toaster/>
+        <Toaster />
         </body>
     </html>
   );

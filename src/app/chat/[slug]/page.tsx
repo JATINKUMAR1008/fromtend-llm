@@ -56,7 +56,7 @@ export default function ChatPage({ params }: IPageProps) {
             content: input
         }, {
             sent_from: 'ai',
-            content: 'thinking...'
+            content: "Expect some delay as your question spans a range of year"
         }] as IMessage[]);
 
         const res = await fetch(`${process.env.NEXT_PUBLIC_API}/ai_response/${chatId}`, {

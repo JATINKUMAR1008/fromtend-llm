@@ -51,7 +51,7 @@ export default function Chat() {
             content: input
         }, {
             sent_from: 'ai',
-            content: 'thinking...'
+            content: "Expect some delay as your question spans a range of year"
         }] as IMessage[]);
 
         const chatId = await createAndUpdateChat(input)
