@@ -44,15 +44,30 @@ export default function Chat() {
     }
 
     const handleSubmit = async (input: string) => {
-
-        //@ts-ignore
         setMessages([...messages, {
             sent_from: 'user',
             content: input
         }, {
             sent_from: 'ai',
-            content: "Expect some delay as your question spans a range of year"
+            content: "Thinking..."
         }] as IMessage[]);
+        //@ts-ignore
+        const question_classification = await fetch(`${process.env.NEXT_PUBLIC_API}/question_classification`, {
+            method: "POST",
+            body: JSON.stringify({ question: input }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((res) => res.json()).then((data) => { return data.response })
+        console.log(question_classification)
+        setMessages([...messages, {
+            sent_from: 'user',
+            content: input
+        }, {
+            sent_from: 'ai',
+            content: question_classification
+        }] as IMessage[]);
+
 
         const chatId = await createAndUpdateChat(input)
         dispatch(setCurrentChat(chatId))
@@ -100,13 +115,13 @@ export default function Chat() {
     }, [messages])
 
     return (
-        <div className="xl:w-[100%] md:w-[80%] w-[90%] m-auto h-screen relative flex justify-center scrollbar-hidden">
-            <div className="h-[calc(100%-3.5rem-110px)] min-w-full   mt-14 pt-5 pb-2 flex flex-col gap-1 overflow-y-auto scrollbar-hidden" ref={containerRef}>
+        <div className="xl:w-[100%]  md:w-[80%] w-[90%] md:px-56 m-auto h-screen relative flex justify-center scrollbar-hidden">
+            <div className="h-[calc(100%-3.5rem-110px)] min-w-full  pt-5 pb-2 flex flex-col gap-1 overflow-y-auto scrollbar-hidden" ref={containerRef}>
                 {messages.length > 0 ? messages?.map((message, index) => (
                     //@ts-ignore
                     <ChatBox key={index} message={message} />
                 )) : (
-                    <div className="w-full h-full flex flex-col items-center justify-center">
+                    <div className="w-full h-full flex flex-col items-center justify-center mt-[15%]">
                         <div className="flex flex-col items-center">
                             <Image src={ai_img} alt="ai" width={100} height={100} />
                             <h1 className="mt-1 text-2xl font-sans">Hello, I{"'"}m GAIA</h1>

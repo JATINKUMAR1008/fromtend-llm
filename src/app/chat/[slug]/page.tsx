@@ -56,7 +56,22 @@ export default function ChatPage({ params }: IPageProps) {
             content: input
         }, {
             sent_from: 'ai',
-            content: "Expect some delay as your question spans a range of year"
+            content: "Thinking..."
+        }] as IMessage[]);
+        const question_classification = await fetch(`${process.env.NEXT_PUBLIC_API}/question_classification`, {
+            method: "POST",
+            body: JSON.stringify({ question: input }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((res) => res.json()).then((data) => { return data.response })
+        console.log(question_classification)
+        setMessages([...messages, {
+            sent_from: 'user',
+            content: input
+        }, {
+            sent_from: 'ai',
+            content: question_classification
         }] as IMessage[]);
 
         const res = await fetch(`${process.env.NEXT_PUBLIC_API}/ai_response/${chatId}`, {
