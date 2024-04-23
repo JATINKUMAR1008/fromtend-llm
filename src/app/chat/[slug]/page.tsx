@@ -36,7 +36,7 @@ interface Message {
 }
 interface IMessage {
     sent_from: string
-    content: string
+    content: string | ReactNode
 }
 interface IChat {
     chat_id: string
@@ -49,30 +49,44 @@ export default function ChatPage({ params }: IPageProps) {
     const [messages, setMessages] = useState<IMessage[]>([])
     const [question, setQuestion] = useState<string>('')
     const containerRef = useRef(null)
+    const ThinkingComponent: React.FC = () => <span className="thinking">Thinking...</span>;
+    const QuestionClassificationComponent: React.FC<{ classification: string }> = ({ classification }) => (
+    <span className="slide-in">{classification}</span>
+    );
     const handleSubmit = async (input: string) => {
         //@ts-ignore
-        setMessages([...messages, {
-            sent_from: 'user',
-            content: input
-        }, {
-            sent_from: 'ai',
-            content: "Thinking..."
-        }] as IMessage[]);
-        const question_classification = await fetch(`${process.env.NEXT_PUBLIC_API}/question_classification`, {
+        setMessages([
+            ...messages,
+            { sent_from: 'user', content: input },
+            { sent_from: 'ai', content: <span className="thinking">Thinking...</span> }
+          ] as IMessage[]);
+        
+          const question_classification = await fetch(`${process.env.NEXT_PUBLIC_API}/question_classification`, {
             method: "POST",
             body: JSON.stringify({ question: input }),
-            headers: {
-                'Content-Type': 'application/json'
+            headers: { 'Content-Type': 'application/json' }
+          }).then((res) => res.json()).then((data) => data.response);
+        
+          let isAiResponseStarted = false;
+          const toggleInterval = setInterval(() => {
+            if (isAiResponseStarted) {
+              clearInterval(toggleInterval);
+            } else {
+              setMessages([
+                ...messages,
+                { sent_from: 'user', content: input },
+                { sent_from: 'ai', content: <span className="slide-in">{question_classification}</span> }
+              ] as IMessage[]);
+        
+              setTimeout(() => {
+                setMessages([
+                  ...messages,
+                  { sent_from: 'user', content: input },
+                  { sent_from: 'ai', content: <span className="thinking">Thinking...</span> }
+                ] as IMessage[]);
+              }, 2000);
             }
-        }).then((res) => res.json()).then((data) => { return data.response })
-        console.log(question_classification)
-        setMessages([...messages, {
-            sent_from: 'user',
-            content: input
-        }, {
-            sent_from: 'ai',
-            content: question_classification
-        }] as IMessage[]);
+          }, 4000);
 
         const res = await fetch(`${process.env.NEXT_PUBLIC_API}/ai_response/${chatId}`, {
             method: 'POST',
@@ -91,6 +105,8 @@ export default function ChatPage({ params }: IPageProps) {
             while (!chunk.done) {
                 result += decoder.decode(chunk.value, { stream: true });
                 // console.log(result)
+                isAiResponseStarted = true;
+                clearInterval(toggleInterval);
                 //@ts-ignore
                 setMessages([...messages, {
                     sent_from: 'user',
