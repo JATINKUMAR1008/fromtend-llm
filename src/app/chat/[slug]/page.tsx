@@ -22,25 +22,9 @@ interface IPageProps {
         slug: string
     }
 }
-interface IChatComponents {
-    params: {
-        slug: string
-    }
-    refetch: () => void
-}
-interface Message {
-    message: IMessage,
-    last_user_message: string,
-    handleInputChange: () => void
-    setMessagesState: (messages: any) => void
-}
 interface IMessage {
     sent_from: string
     content: string | ReactNode
-}
-interface IChat {
-    chat_id: string
-    label: string
 }
 export default function ChatPage({ params }: IPageProps) {
     const chatId = params.slug
@@ -49,10 +33,6 @@ export default function ChatPage({ params }: IPageProps) {
     const [messages, setMessages] = useState<IMessage[]>([])
     const [question, setQuestion] = useState<string>('')
     const containerRef = useRef(null)
-    const ThinkingComponent: React.FC = () => <span className="thinking">Thinking...</span>;
-    const QuestionClassificationComponent: React.FC<{ classification: string }> = ({ classification }) => (
-    <span className="slide-in">{classification}</span>
-    );
     const handleSubmit = async (input: string) => {
         //@ts-ignore
         setMessages([
@@ -75,7 +55,7 @@ export default function ChatPage({ params }: IPageProps) {
               setMessages([
                 ...messages,
                 { sent_from: 'user', content: input },
-                { sent_from: 'ai', content: <span className="slide-in">{question_classification}</span> }
+                { sent_from: 'ai', content: <span className="thinking">{question_classification}</span> }
               ] as IMessage[]);
         
               setTimeout(() => {
@@ -84,9 +64,9 @@ export default function ChatPage({ params }: IPageProps) {
                   { sent_from: 'user', content: input },
                   { sent_from: 'ai', content: <span className="thinking">Thinking...</span> }
                 ] as IMessage[]);
-              }, 2000);
+              }, 3000);
             }
-          }, 4000);
+          }, 7000);
 
         const res = await fetch(`${process.env.NEXT_PUBLIC_API}/ai_response/${chatId}`, {
             method: 'POST',
