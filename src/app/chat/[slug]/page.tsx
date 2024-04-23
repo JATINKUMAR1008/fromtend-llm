@@ -57,14 +57,6 @@ export default function ChatPage({ params }: IPageProps) {
                 { sent_from: 'user', content: input },
                 { sent_from: 'ai', content: <span className="thinking">{question_classification}</span> }
               ] as IMessage[]);
-        
-              setTimeout(() => {
-                setMessages([
-                  ...messages,
-                  { sent_from: 'user', content: input },
-                  { sent_from: 'ai', content: <span className="thinking">Thinking...</span> }
-                ] as IMessage[]);
-              }, 3000);
             }
           }, 7000);
 
